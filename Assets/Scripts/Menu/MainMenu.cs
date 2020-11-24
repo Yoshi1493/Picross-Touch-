@@ -1,0 +1,61 @@
+﻿using System.Collections;
+using UnityEngine;
+using TMPro;
+using static CoroutineHelper;
+
+public class MainMenu : Menu
+{
+    [SerializeField] CameraController cameraController;
+
+    [Space]
+
+    [SerializeField] TextMeshProUGUI titleText;
+    [SerializeField] AnimationCurve titleAnimationCurve;
+
+    CanvasGroup canvasGroup;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        canvasGroup = GetComponent<CanvasGroup>();
+    }
+
+    IEnumerator Start()
+    {
+        float currentLerpTime = 0;
+        float totalLerpTime = 1;
+
+        while (currentLerpTime < totalLerpTime)
+        {
+            yield return EndOfFrame;
+            currentLerpTime += Time.deltaTime;
+
+            //animate character spacing
+            titleText.characterSpacing = titleAnimationCurve.Evaluate(currentLerpTime / totalLerpTime);
+
+            //animate canvas alpha
+            canvasGroup.alpha = Mathf.Lerp(0, 1, currentLerpTime * 2 / totalLerpTime);
+
+            //enable canvas buttons halfway through animation
+            if (!canvasGroup.interactable && currentLerpTime / totalLerpTime > 0.5f) canvasGroup.interactable = true;
+        }
+    }
+
+#if UNITY_ANDROID
+    void Update()
+    {
+        if (Input.GetButtonUp("Cancel"))
+        {
+            if (cameraController.currentScreen == CameraController.CurrentScreen.MainMenu)
+            {
+                AndroidJavaObject androidJavaObject = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
+                androidJavaObject.Call<bool>("moveTaskToBack", true);
+            }
+            else
+            {
+                cameraController.OnSelectBackToMainMenu();
+            }
+        }
+    }
+#endif
+}
