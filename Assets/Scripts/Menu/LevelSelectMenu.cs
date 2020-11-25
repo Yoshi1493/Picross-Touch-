@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 using static GameSettings;
@@ -50,8 +49,8 @@ public class LevelSelectMenu : Menu
         boardSizeText.text = $"{(playerSettings.selectedDiffculty + 1) * 5}x{(playerSettings.selectedDiffculty + 1) * 5}";
 
         //hide respective board size change button if difficulty is outside the range of [minBoardSize, maxBoardSize]
-        boardSizeChangeButtons[0].SetActive(playerSettings.selectedDiffculty < DifficultyCount - 1);
-        boardSizeChangeButtons[1].SetActive(playerSettings.selectedDiffculty > 0);
+        boardSizeChangeButtons[0].SetActive(playerSettings.selectedDiffculty > 0);
+        boardSizeChangeButtons[1].SetActive(playerSettings.selectedDiffculty < DifficultyCount - 1);
 
         //display level select screen based on player settings
         for (int i = 0; i < levelSelectScreens.Length; i++)
