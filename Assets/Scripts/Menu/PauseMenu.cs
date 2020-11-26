@@ -1,12 +1,11 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
-
-public class PauseMenu : Menu
+﻿public class PauseMenu : Menu
 {
     protected override void Awake()
     {
         base.Awake();
+
         GetComponent<PauseHandler>().GamePauseAction += OnPausedStateChanged;
+        FindObjectOfType<Game>().GameOverAction += OnGameOver;
     }
     
     void OnPausedStateChanged(bool state)
@@ -14,14 +13,9 @@ public class PauseMenu : Menu
         if (state) Open();
         else Close();
     }
-    
-#if UNITY_ANDROID
-    void Update()
+
+    void OnGameOver()
     {
-        if (Input.GetButtonUp("Cancel"))
-        {
-            GetComponentInChildren<Button>().onClick.Invoke();
-        }
+        GetComponent<PauseHandler>().GamePauseAction -= OnPausedStateChanged;
     }
-#endif
 }

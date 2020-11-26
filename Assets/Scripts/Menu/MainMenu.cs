@@ -18,6 +18,11 @@ public class MainMenu : Menu
     {
         base.Awake();
         canvasGroup = GetComponent<CanvasGroup>();
+
+        if (cameraController.currentScreen == CameraController.CurrentScreen.LevelSelect)
+        {
+            Disable();
+        }
     }
 
     IEnumerator Start()
@@ -40,22 +45,10 @@ public class MainMenu : Menu
             if (!canvasGroup.interactable && currentLerpTime / totalLerpTime > 0.5f) canvasGroup.interactable = true;
         }
     }
-
-#if UNITY_ANDROID
-    void Update()
+    
+    protected override void HandleBackButtonInput()
     {
-        if (Input.GetButtonUp("Cancel"))
-        {
-            if (cameraController.currentScreen == CameraController.CurrentScreen.MainMenu)
-            {
-                AndroidJavaObject androidJavaObject = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
-                androidJavaObject.Call<bool>("moveTaskToBack", true);
-            }
-            else
-            {
-                cameraController.OnSelectBackToMainMenu();
-            }
-        }
+        AndroidJavaObject androidJavaObject = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
+        androidJavaObject.Call<bool>("moveTaskToBack", true);
     }
-#endif
 }

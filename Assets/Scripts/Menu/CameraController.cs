@@ -22,10 +22,7 @@ public class CameraController : MonoBehaviour
     {
         mainCam = Camera.main;
         levelSelectCamPos = CameraCropper.targetAspectRatio * mainCam.orthographicSize * 2;
-    }
 
-    void Start()
-    {
         if (SceneTracker.PreviousSceneIndex == 0)
         {
             mainCam.transform.position = new Vector3(0, 0, mainCam.transform.position.z);

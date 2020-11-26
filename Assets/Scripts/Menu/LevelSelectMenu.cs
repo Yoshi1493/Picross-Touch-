@@ -5,6 +5,8 @@ using static GameSettings;
 
 public class LevelSelectMenu : Menu
 {
+    [SerializeField] CameraController cameraController;
+
     [SerializeField] GameObject[] levelSelectScreens = new GameObject[DifficultyCount];
 
     //0 = diff up; 1 = diff down
@@ -17,6 +19,11 @@ public class LevelSelectMenu : Menu
     {
         base.Awake();
         InitPuzzles();
+
+        if (cameraController.currentScreen == CameraController.CurrentScreen.LevelSelect)
+        {
+            Enable();
+        }
     }
 
     //add new Picross object for every level select icon in all elements of levelSelectScreens

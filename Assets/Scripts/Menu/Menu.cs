@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Canvas))]
 public class Menu : MonoBehaviour
@@ -13,13 +14,13 @@ public class Menu : MonoBehaviour
     public void Open()
     {
         thisMenu.enabled = true;
-        if (thisMenu.TryGetComponent(out Menu m)) m.enabled = true;
+        if (thisMenu.TryGetComponent(out Menu m)) m.Enable();
     }
 
-    public virtual void Close()
+    public void Close()
     {
         thisMenu.enabled = false;
-        enabled = false;
+        Disable();
     }
 
     public void Disable()
@@ -29,6 +30,8 @@ public class Menu : MonoBehaviour
             cg.interactable = false;
             cg.blocksRaycasts = false;
         }
+
+        enabled = false;
     }
 
     public void Enable()
@@ -38,10 +41,27 @@ public class Menu : MonoBehaviour
             cg.interactable = true;
             cg.blocksRaycasts = true;
         }
+
+        enabled = true;
     }
 
     public void LoadScene(int sceneIndex)
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene(sceneIndex);
     }
+
+#if UNITY_ANDROID
+    void Update()
+    {
+        if (Input.GetButtonUp("Cancel"))
+        {
+            HandleBackButtonInput();
+        }
+    }
+
+    protected virtual void HandleBackButtonInput()
+    {
+        GetComponentInChildren<Button>().onClick.Invoke();
+    }
+#endif
 }

@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 
 public class InstructionsMenu : Menu
 {
@@ -20,14 +19,4 @@ public class InstructionsMenu : Menu
         pageChangeButtons[0].SetActive(currentPage > 0);
         pageChangeButtons[1].SetActive(currentPage < instructionPages.Length - 1);
     }
-
-#if UNITY_ANDROID
-    void Update()
-    {
-        if (Input.GetButtonUp("Cancel"))
-        {
-            GetComponentInChildren<Button>().onClick.Invoke();
-        }
-    }
-#endif
 }

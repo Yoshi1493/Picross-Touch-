@@ -40,19 +40,8 @@ public class SettingsMenu : Menu
         UpdateAutofillToggle();
     }
 
-    public override void Close()
+    public void SaveSettings()
     {
         FileHandler.SaveSettings();
-        base.Close();
     }
-
-#if UNITY_ANDROID
-    void Update()
-    {
-        if (Input.GetButtonUp("Cancel"))
-        {
-            GetComponentInChildren<Button>().onClick.Invoke();
-        }
-    }
-#endif
 }
