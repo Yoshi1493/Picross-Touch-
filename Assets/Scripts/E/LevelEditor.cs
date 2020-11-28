@@ -10,7 +10,7 @@ public class LevelEditor : MonoBehaviour
     {
         var path = EditorUtility.SaveFilePanel(
             "Save level",
-            "D:/Program Files/Unity/Projects/Momograms/Assets/Scripts/Game/Level Files",
+            $"{Application.dataPath}/Scripts/Game/Level Files",
             $"[{targetPuzzleData.RowCount}x{targetPuzzleData.ColCount}] .txt",
             "txt"
             );
