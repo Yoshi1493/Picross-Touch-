@@ -138,10 +138,10 @@ public class GameSettings
     public static Vector2 InverseCellScale => new Vector2(1 / CellScale.x, 1 / CellScale.y);
 
     //row/column font size for a 5x5 level
-    public const float DefaultFontSize = 60;
+    public const float DefaultFontSize = 50;
 
     //decrease font size by this much for every additional 5 rows/columns in the level
-    public const float FontSizeReductionRate = 12;
+    public const float FontSizeReductionRate = 10;
     #endregion
 
     #region Player settings
