@@ -21,7 +21,7 @@ public class Game : MonoBehaviour
         GameOverAction += SavePuzzle;
 
         GetComponent<InputHandler>().HighlightEndAction += SetCells;
-        
+
         //init. based on loaded puzzle's row/column counts
         cells = new Cell[targetPuzzleData.RowCount, targetPuzzleData.ColCount];
     }
@@ -37,7 +37,7 @@ public class Game : MonoBehaviour
                 SetCell(row, col, currentPuzzleData.cellData.Cells[row, col]);
             }
         }
-        
+
         InitEmptyRowsAndColumns();
 
         //reset current input tool
@@ -72,7 +72,7 @@ public class Game : MonoBehaviour
             }
         }
     }
-    
+
     void SetCells(List<Vector2Int> selectedCells)
     {
         if (selectedCells.Count == 0) return;
@@ -303,8 +303,11 @@ public class Game : MonoBehaviour
 
     public void SavePuzzle()
     {
-        puzzles[playerSettings.selectedDiffculty][playerSettings.selectedPuzzle] = currentPuzzleData;
-        FileHandler.SavePuzzles();
+        if (!(undoStack.Count == 0 && redoStack.Count == 0))
+        {
+            puzzles[playerSettings.selectedDiffculty][playerSettings.selectedPuzzle] = currentPuzzleData;
+            FileHandler.SavePuzzles();
+        }
     }
     #endregion
 
@@ -318,6 +321,21 @@ public class Game : MonoBehaviour
             for (int j = 0; j < currentPuzzleData.ColCount; j++)
             {
                 tempCopy[i, j] = currentPuzzleData.cellData.Cells[i, currentPuzzleData.ColCount - 1 - j];
+            }
+        }
+
+        RedrawGameBoard(tempCopy);
+    }
+
+    public void InvertPuzzle()
+    {
+        CellType[,] tempCopy = currentPuzzleData.cellData.Cells.Clone() as CellType[,];
+
+        for (int i = 0; i < currentPuzzleData.RowCount; i++)
+        {
+            for (int j = 0; j < currentPuzzleData.ColCount; j++)
+            {
+                tempCopy[i, j] = currentPuzzleData.cellData.Cells[i, j] == CellType.Filled ? CellType.Empty : CellType.Filled;
             }
         }
 
