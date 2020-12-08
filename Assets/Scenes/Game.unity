@@ -649,7 +649,6 @@ GameObject:
   - component: {fileID: 137706235}
   - component: {fileID: 137706234}
   - component: {fileID: 137706233}
-  - component: {fileID: 137706239}
   m_Layer: 5
   m_Name: HUD (Canvas)
   m_TagString: Untagged
@@ -772,20 +771,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &137706239
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 137706232}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dbc7f84f36402e43a9ce2016ef79c09, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  highlightSprite: {fileID: 1789820315}
-  highlightedCellCountBackground: {fileID: 2005440795}
 --- !u!1 &181637127
 GameObject:
   m_ObjectHideFlags: 0
@@ -5343,6 +5328,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1789820314}
   - component: {fileID: 1789820315}
+  - component: {fileID: 1789820316}
   m_Layer: 0
   m_Name: Highlight overlay
   m_TagString: Untagged
@@ -5413,6 +5399,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1789820316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1789820313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dbc7f84f36402e43a9ce2016ef79c09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  highlightSprite: {fileID: 1789820315}
+  highlightedCellCountBackground: {fileID: 2005440795}
 --- !u!1 &1839856270
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,9 +6,8 @@ using static Vector2Helper;
 
 public class HighlightDisplay : MonoBehaviour
 {
-    Game gameController;
+    SpriteRenderer highlightSprite;
 
-    [SerializeField] SpriteRenderer highlightSprite;
     [SerializeField] SpriteRenderer highlightedCellCountBackground;
     TextMeshProUGUI highlightedCellCountText;
 
@@ -16,10 +15,10 @@ public class HighlightDisplay : MonoBehaviour
 
     void Awake()
     {
-        gameController = FindObjectOfType<Game>();
         FindObjectOfType<InputHandler>().HighlightStartAction += OnHighlightStart;
         FindObjectOfType<InputHandler>().HighlightEndAction += OnHighlightEnd;
 
+        highlightSprite = GetComponent<SpriteRenderer>();
         highlightSprite.transform.localScale = CellScale;
         highlightedCellCountText = highlightedCellCountBackground.GetComponentInChildren<TextMeshProUGUI>();
     }

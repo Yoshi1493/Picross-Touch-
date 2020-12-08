@@ -20,6 +20,6 @@ public class GameBoard : MonoBehaviour
 
     void OnGameOver()
     {
-        SetColliderState(false);
+        SetColliderState(true);
     }
 }
