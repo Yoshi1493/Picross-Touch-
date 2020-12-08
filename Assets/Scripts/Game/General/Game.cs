@@ -21,6 +21,7 @@ public class Game : MonoBehaviour
         GameOverAction += SavePuzzle;
 
         GetComponent<InputHandler>().HighlightEndAction += SetCells;
+        GetComponent<HintHandler>().PerformHintAction += FillHintCells;
 
         //init. based on loaded puzzle's row/column counts
         cells = new Cell[targetPuzzleData.RowCount, targetPuzzleData.ColCount];
@@ -34,7 +35,7 @@ public class Game : MonoBehaviour
             for (int col = 0; col < targetPuzzleData.ColCount; col++)
             {
                 cells[row, col] = cellHolder.GetChild(row * targetPuzzleData.ColCount + col).GetComponent<Cell>();
-                SetCell(row, col, currentPuzzleData.cellData.Cells[row, col]);
+                SetCellType(row, col, currentPuzzleData.cellData.Cells[row, col]);
             }
         }
 
@@ -50,24 +51,24 @@ public class Game : MonoBehaviour
     {
         if (!playerSettings.autofillEnabled) return;
 
-        for (int r = 0; r < targetPuzzleData.RowCount; r++)
+        for (int row = 0; row < targetPuzzleData.RowCount; row++)
         {
-            if (targetPuzzleData.cellData.RowData[r].Count == 0)
+            if (targetPuzzleData.cellData.RowData[row].Count == 0)
             {
-                for (int c = 0; c < targetPuzzleData.ColCount; c++)
+                for (int col = 0; col < targetPuzzleData.ColCount; col++)
                 {
-                    SetCell(r, c, CellType.Crossed);
+                    SetCellType(row, col, CellType.Crossed);
                 }
             }
         }
 
-        for (int c = 0; c < targetPuzzleData.ColCount; c++)
+        for (int col = 0; col < targetPuzzleData.ColCount; col++)
         {
-            if (targetPuzzleData.cellData.ColData[c].Count == 0)
+            if (targetPuzzleData.cellData.ColData[col].Count == 0)
             {
-                for (int r = 0; r < targetPuzzleData.RowCount; r++)
+                for (int row = 0; row < targetPuzzleData.RowCount; row++)
                 {
-                    SetCell(r, c, CellType.Crossed);
+                    SetCellType(row, col, CellType.Crossed);
                 }
             }
         }
@@ -75,12 +76,11 @@ public class Game : MonoBehaviour
 
     void SetCells(List<Vector2Int> selectedCells)
     {
+        //make sure at least 1 cell is selected
         if (selectedCells.Count == 0) return;
 
         //push current puzzle data
-        redoStack.Clear();
-        CellType[,] gameBoard = currentPuzzleData.cellData.Cells.Clone() as CellType[,];
-        undoStack.Push(gameBoard);
+        Do(currentPuzzleData.cellData.Cells.Clone() as CellType[,]);
 
         //determine whether or not all CellTypes are the same within selectedCells
         bool allSameCellType = false;
@@ -96,15 +96,15 @@ public class Game : MonoBehaviour
                     switch (cells[cell.x, cell.y].CurrentCellType)
                     {
                         case CellType.Empty:
-                            SetCell(cell.x, cell.y, CellType.Filled);
+                            SetCellType(cell.x, cell.y, CellType.Filled);
                             break;
 
                         case CellType.Filled:
-                            if (allSameCellType) SetCell(cell.x, cell.y, CellType.Empty);
+                            if (allSameCellType) SetCellType(cell.x, cell.y, CellType.Empty);
                             break;
 
                         case CellType.Crossed:
-                            if (allSameCellType) SetCell(cell.x, cell.y, CellType.Filled);
+                            if (allSameCellType) SetCellType(cell.x, cell.y, CellType.Filled);
                             break;
                     }
                     break;
@@ -113,15 +113,15 @@ public class Game : MonoBehaviour
                     switch (cells[cell.x, cell.y].CurrentCellType)
                     {
                         case CellType.Empty:
-                            SetCell(cell.x, cell.y, CellType.Crossed);
+                            SetCellType(cell.x, cell.y, CellType.Crossed);
                             break;
 
                         case CellType.Filled:
-                            SetCell(cell.x, cell.y, CellType.Crossed);
+                            SetCellType(cell.x, cell.y, CellType.Crossed);
                             break;
 
                         case CellType.Crossed:
-                            if (allSameCellType) SetCell(cell.x, cell.y, CellType.Empty);
+                            if (allSameCellType) SetCellType(cell.x, cell.y, CellType.Empty);
                             break;
                     }
                     break;
@@ -132,7 +132,22 @@ public class Game : MonoBehaviour
         UpdateBoardAction.Invoke(currentPuzzleData.cellData);
     }
 
-    void SetCell(int row, int col, CellType cellType)
+    //fill in all cells in all elements of hintCellCoordinates
+    //elements of hintcellCoordinates are determined by HintHandler
+    void FillHintCells(List<Vector2Int> hintCellCoordinates)
+    {
+        Do(currentPuzzleData.cellData.Cells.Clone() as CellType[,]);
+
+        hintCellCoordinates.ForEach(i =>
+        {
+            SetCellType(i.x, i.y, CellType.Filled);
+        });
+
+        UpdateRowColumnData();
+        UpdateBoardAction.Invoke(currentPuzzleData.cellData);
+    }
+
+    void SetCellType(int row, int col, CellType cellType)
     {
         //update current puzzle cell data
         currentPuzzleData.cellData.Cells[row, col] = cellType;
@@ -144,14 +159,14 @@ public class Game : MonoBehaviour
     void RedrawGameBoard(CellType[,] newBoard)
     {
         //find all mismatched cells between current puzzle data and newBoard
-        for (int r = 0; r < targetPuzzleData.RowCount; r++)
+        for (int row = 0; row < targetPuzzleData.RowCount; row++)
         {
-            for (int c = 0; c < targetPuzzleData.ColCount; c++)
+            for (int col = 0; col < targetPuzzleData.ColCount; col++)
             {
-                if (newBoard[r, c] != currentPuzzleData.cellData.Cells[r, c])
+                if (newBoard[row, col] != currentPuzzleData.cellData.Cells[row, col])
                 {
                     //overwrite current puzzle CellType with newBoard's CellType
-                    SetCell(r, c, newBoard[r, c]);
+                    SetCellType(row, col, newBoard[row, col]);
                 }
             }
         }
@@ -167,25 +182,25 @@ public class Game : MonoBehaviour
         int minCol = selectedCells != null ? selectedCells.Select(i => i.y).Min() : 0;
         int maxCol = selectedCells != null ? selectedCells.Select(i => i.y).Max() : targetPuzzleData.ColCount - 1;
 
-        for (int r = minRow; r <= maxRow; r++)
+        for (int row = minRow; row <= maxRow; row++)
         {
-            currentPuzzleData.cellData.RowData[r].Clear();
+            currentPuzzleData.cellData.RowData[row].Clear();
             int filledCells = 0;
 
-            for (int c = targetPuzzleData.ColCount - 1; c >= 0; c--)
+            for (int col = targetPuzzleData.ColCount - 1; col >= 0; col--)
             {
-                if (currentPuzzleData.cellData.Cells[r, c] == CellType.Filled) filledCells++;
+                if (currentPuzzleData.cellData.Cells[row, col] == CellType.Filled) filledCells++;
                 else
                 {
                     if (filledCells > 0)
                     {
-                        currentPuzzleData.cellData.RowData[r].Add(filledCells);
+                        currentPuzzleData.cellData.RowData[row].Add(filledCells);
                         filledCells = 0;
                     }
                 }
             }
 
-            if (filledCells > 0) currentPuzzleData.cellData.RowData[r].Add(filledCells);
+            if (filledCells > 0) currentPuzzleData.cellData.RowData[row].Add(filledCells);
         }
 
         for (int c = minCol; c <= maxCol; c++)
@@ -193,9 +208,9 @@ public class Game : MonoBehaviour
             currentPuzzleData.cellData.ColData[c].Clear();
             int filledCells = 0;
 
-            for (int r = targetPuzzleData.RowCount - 1; r >= 0; r--)
+            for (int row = targetPuzzleData.RowCount - 1; row >= 0; row--)
             {
-                if (currentPuzzleData.cellData.Cells[r, c] == CellType.Filled) filledCells++;
+                if (currentPuzzleData.cellData.Cells[row, c] == CellType.Filled) filledCells++;
                 else
                 {
                     if (filledCells > 0)
@@ -223,7 +238,7 @@ public class Game : MonoBehaviour
             {
                 for (int c = 0; c < targetPuzzleData.ColCount; c++)
                 {
-                    if (cellData.Cells[r, c] == CellType.Empty) SetCell(r, c, CellType.Crossed);
+                    if (cellData.Cells[r, c] == CellType.Empty) SetCellType(r, c, CellType.Crossed);
                 }
             }
         }
@@ -234,7 +249,7 @@ public class Game : MonoBehaviour
             {
                 for (int r = 0; r < targetPuzzleData.RowCount; r++)
                 {
-                    if (cellData.Cells[r, c] == CellType.Empty) SetCell(r, c, CellType.Crossed);
+                    if (cellData.Cells[r, c] == CellType.Empty) SetCellType(r, c, CellType.Crossed);
                 }
             }
         }
@@ -265,7 +280,7 @@ public class Game : MonoBehaviour
         GameOverAction?.Invoke();
     }
 
-    #region Button Functions
+    #region Game state Functions
     public void Undo()
     {
         redoStack.Push(currentPuzzleData.cellData.Cells.Clone() as CellType[,]);
@@ -284,13 +299,21 @@ public class Game : MonoBehaviour
         UpdateBoardAction.Invoke(currentPuzzleData.cellData);
     }
 
+    void Do(CellType[,] gameBoard)
+    {
+        redoStack.Clear();
+        undoStack.Push(gameBoard);
+    }
+    #endregion
+
+    #region Button Functions
     public void Restart()
     {
         for (int r = 0; r < targetPuzzleData.RowCount; r++)
         {
             for (int c = 0; c < targetPuzzleData.ColCount; c++)
             {
-                SetCell(r, c, CellType.Empty);
+                SetCellType(r, c, CellType.Empty);
             }
         }
 
