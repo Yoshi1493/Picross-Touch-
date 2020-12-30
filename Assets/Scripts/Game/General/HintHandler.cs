@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 using static GameSettings;
 
 public class HintHandler : MonoBehaviour
@@ -14,6 +16,15 @@ public class HintHandler : MonoBehaviour
     public event System.Action<List<Vector2Int>> PerformHintAction;
     public event System.Action<string> CannotPerformHintAction;
 
+    Button hintButton;
+    TextMeshProUGUI hintsRemainingText;
+
+    void Awake()
+    {
+        hintButton = GetComponent<Button>();
+        hintsRemainingText = GetComponentInChildren<TextMeshProUGUI>();
+    }
+
     void Start()
     {
         ResetHintsRemaining();
@@ -24,6 +35,24 @@ public class HintHandler : MonoBehaviour
         numTargetFilled = targetPuzzleData.cellData.RowData.Sum(i => i.Sum());
     }
 
+    //set starting number of hints according to board size
+    //also called upon pressing Restart button
+    public void ResetHintsRemaining()
+    {
+        SetHintsRemaining(playerSettings.selectedDiffculty + 1);
+    }
+
+    void SetHintsRemaining(int amount)
+    {
+        hintsRemaining = amount;
+        hintsRemainingText.text = $"Hint:\n{amount}";
+
+        if (amount <= 0)
+        {
+            hintButton.interactable = false;
+        }
+    }
+
     public void OnSelectHint()
     {
         if (hintsRemaining > 0)
@@ -31,7 +60,7 @@ public class HintHandler : MonoBehaviour
             if (CanPerformHint())
             {
                 PerformHintAction?.Invoke(hintCellCoordinates);
-                hintsRemaining--;
+                SetHintsRemaining(hintsRemaining - 1);
             }
             else
             {
@@ -71,12 +100,5 @@ public class HintHandler : MonoBehaviour
             return true;
         }
         else return false;
-    }
-
-    //set starting number of hints according to board size
-    //also called upon restarting puzzle
-    public void ResetHintsRemaining()
-    {
-        hintsRemaining = playerSettings.selectedDiffculty + 1;
     }
 }

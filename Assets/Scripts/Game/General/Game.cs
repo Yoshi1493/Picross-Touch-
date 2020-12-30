@@ -21,7 +21,7 @@ public class Game : MonoBehaviour
         GameOverAction += SavePuzzle;
 
         GetComponent<InputHandler>().HighlightEndAction += SetCells;
-        GetComponent<HintHandler>().PerformHintAction += FillHintCells;
+        FindObjectOfType<HintHandler>().PerformHintAction += FillHintCells;
 
         //init. based on loaded puzzle's row/column counts
         cells = new Cell[targetPuzzleData.RowCount, targetPuzzleData.ColCount];
