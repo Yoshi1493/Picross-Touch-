@@ -45,10 +45,12 @@ public class MainMenu : Menu
             if (!canvasGroup.interactable && currentLerpTime / totalLerpTime > 0.5f) canvasGroup.interactable = true;
         }
     }
-    
+
+#if UNITY_ANDROID
     protected override void HandleBackButtonInput()
     {
         AndroidJavaObject androidJavaObject = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
         androidJavaObject.Call<bool>("moveTaskToBack", true);
     }
+#endif
 }
