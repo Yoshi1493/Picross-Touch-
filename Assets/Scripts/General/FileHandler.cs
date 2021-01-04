@@ -62,6 +62,7 @@ public static class FileHandler
     {
         Directory.CreateDirectory(saveDataDirectoryPath);
 
+        //try to find player save data
         try
         {
             BinaryFormatter bf = new BinaryFormatter();
@@ -70,6 +71,7 @@ public static class FileHandler
                 puzzles = bf.Deserialize(file) as List<Picross>[];
             }
         }
+        //otherwise create new save data
         catch (FileNotFoundException)
         {
             puzzles = new List<Picross>[DifficultyCount];

@@ -27,17 +27,27 @@ public class LevelSelectMenu : Menu
     }
 
     //add new Picross object for every level select icon in all elements of levelSelectScreens
-    //to-do: future-proof
     void InitPuzzles()
     {
         for (int i = 0; i < DifficultyCount; i++)
         {
-            if (puzzles[i].Capacity > 0) return;
+            int levelCount = levelSelectScreens[i].transform.childCount;
 
-            puzzles[i].Capacity = levelSelectScreens[i].transform.childCount;
-            for (int j = 0; j < puzzles[i].Capacity; j++)
+            if (puzzles[i].Count == 0)
             {
-                puzzles[i].Add(new Picross());
+                for (int j = 0; j < levelCount; j++)
+                {
+                    puzzles[i].Add(new Picross());
+                }
+            }
+            else
+            {
+                if (puzzles[i].Count == levelCount) continue;
+
+                for (int j = puzzles[i].Count; j < levelCount; j++)
+                {
+                    puzzles[i].Add(new Picross());
+                }
             }
         }
 
@@ -70,7 +80,7 @@ public class LevelSelectMenu : Menu
     {
         for (int i = 0; i < DifficultyCount; i++)
         {
-            for (int j = 0; j < puzzles[i].Capacity; j++)
+            for (int j = 0; j < puzzles[i].Count; j++)
             {
                 levelSelectScreens[i].transform.GetChild(j).GetComponent<LevelSelectButton>().UpdateDisplay(puzzles[i][j]);
             }
@@ -107,7 +117,7 @@ public class LevelSelectMenu : Menu
         {
             confirmSelectMenu.Open();
             confirmSelectMenu.confirmButton.onClick.AddListener(() => ResetLevel());
-            Disable();            
+            Disable();
         }
         //otherwise go straight into Game scene
         else
