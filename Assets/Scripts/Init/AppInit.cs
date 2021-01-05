@@ -8,5 +8,9 @@ public class AppInit : MonoBehaviour
         playerSettings.UpdateSettings(FileHandler.LoadSettings());
         FileHandler.LoadPuzzles();
         UnityEngine.SceneManagement.SceneManager.LoadScene(1);
+
+#if UNITY_STANDALONE
+        Screen.fullScreen = false;
+#endif
     }
 }
