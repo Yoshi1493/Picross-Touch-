@@ -8,25 +8,21 @@ public class LevelSelectButton : MonoBehaviour
 {
     public TextAsset data;
 
-    [SerializeField] Image puzzleImage;
+    [SerializeField] Image[] puzzleIcons = new Image[System.Enum.GetNames(typeof(CompletionStatus)).Length];
     [SerializeField] TextMeshProUGUI puzzleName;
 
     public void UpdateDisplay(Picross puzzle)
     {
         UpdateCompletedImage(puzzle);
 
-        switch (puzzle.completionStatus)
+        for (int i = 0; i < puzzleIcons.Length; i++)
         {
-            case CompletionStatus.Unopened:
-                break;
+            puzzleIcons[i].enabled = i == (int)puzzle.completionStatus;
+        }
 
-            case CompletionStatus.Incomplete:
-                break;
-
-            case CompletionStatus.Complete:
-                puzzleImage.enabled = true;
-                puzzleName.text = puzzle.name;
-                break;
+        if (puzzle.completionStatus == CompletionStatus.Complete)
+        {
+            puzzleName.text = puzzle.name;
         }
     }
     
@@ -49,6 +45,6 @@ public class LevelSelectButton : MonoBehaviour
             Mathf.Min(tex2D.width, tex2D.height)
             );
 
-        puzzleImage.sprite = spr;
+        puzzleIcons[(int)CompletionStatus.Complete].sprite = spr;
     }
 }

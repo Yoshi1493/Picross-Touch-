@@ -86,7 +86,7 @@ public static class FileHandler
 
     #region Puzzle image files
 
-    //convert puzzle data into pixel colours, and save it as a jpg file
+    //convert puzzle data into pixel colours, encode as png, save as byte array
     public static void SaveAsCompletedImage(this Picross puzzle)
     {
         //set image dimensions

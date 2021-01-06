@@ -331,6 +331,10 @@ public class Game : MonoBehaviour
             puzzles[playerSettings.selectedDiffculty][playerSettings.selectedPuzzle] = currentPuzzleData;
             FileHandler.SavePuzzles();
         }
+        else
+        {
+            currentPuzzleData.completionStatus = CompletionStatus.Unopened;
+        }
     }
     #endregion
 

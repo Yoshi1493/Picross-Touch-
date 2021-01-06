@@ -119,9 +119,10 @@ public class LevelSelectMenu : Menu
             confirmSelectMenu.confirmButton.onClick.AddListener(() => ResetLevel());
             Disable();
         }
-        //otherwise go straight into Game scene
+        //otherwise update current puzzle completion status to Incomplete, and go straight to Game scene
         else
         {
+            currentPuzzleData.completionStatus = CompletionStatus.Incomplete;
             LoadScene(2);
         }
     }
