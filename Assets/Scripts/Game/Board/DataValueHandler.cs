@@ -6,15 +6,16 @@ using static GameSettings;
 
 public class DataValueHandler : MonoBehaviour
 {
-    [SerializeField] Transform rowDataHolder, colDataHolder;
     HorizontalOrVerticalLayoutGroup rowLayoutGroup, colLayoutGroup;
+
+    [SerializeField] Transform rowDataHolder, colDataHolder;
     [SerializeField] GameObject rowDataValuePrefab, colDataValuePrefab;
 
     const float CellSize = 16f / 9f * 100;
+    const string DoubleDigitColour = "FFFF00";
 
     void Awake()
     {
-        GenerateDataValues();
         FindObjectOfType<Game>().UpdateBoardAction += UpdateDataValues;
 
         rowLayoutGroup = rowDataHolder.GetComponent<VerticalLayoutGroup>();
@@ -22,13 +23,17 @@ public class DataValueHandler : MonoBehaviour
 
         rowLayoutGroup.spacing = CellSize * CellScale.y;
         colLayoutGroup.spacing = CellSize * CellScale.x;
+
         rowLayoutGroup.padding.top = Mathf.RoundToInt(rowLayoutGroup.spacing / 2);
         colLayoutGroup.padding.left = Mathf.RoundToInt(colLayoutGroup.spacing / 2);
+
+        GenerateDataValues();
     }
 
     //instantiate data value text prefabs and set text to display respective row/column data
     void GenerateDataValues()
     {
+        //display respective row data values
         for (int i = targetPuzzleData.RowCount - 1; i >= 0; i--)
         {
             GameObject newRowDataValue = Instantiate(rowDataValuePrefab, rowDataHolder) as GameObject;
@@ -37,21 +42,30 @@ public class DataValueHandler : MonoBehaviour
             //update font size based on row count
             tmp.fontSize = DefaultFontSize - (FontSizeReductionRate * (InverseCellScale.y - 1));
 
-            //display respective row data (print 0
+            //if row is empty, print "0"
             if (targetPuzzleData.cellData.RowData[i].Count == 0)
             {
                 tmp.text = "0";
-                tmp.color = Color.grey;
             }
+            //otherwise print all values
             else
             {
                 foreach (var item in targetPuzzleData.cellData.RowData[i])
                 {
-                    tmp.text += item + " ";
+                    //change colour of double digit numbers (ex. to differentiate between "1 1" and "11")
+                    if (item >= 10)
+                    {
+                        tmp.text += $"<color=#{DoubleDigitColour}>{item}</color> ";
+                    }
+                    else
+                    {
+                        tmp.text += $"{item} ";
+                    }
                 }
             }
         }
 
+        //repeat for column data values
         for (int i = targetPuzzleData.ColCount - 1; i >= 0; i--)
         {
             GameObject newColDataValue = Instantiate(colDataValuePrefab, colDataHolder) as GameObject;
@@ -62,13 +76,19 @@ public class DataValueHandler : MonoBehaviour
             if (targetPuzzleData.cellData.ColData[i].Count == 0)
             {
                 tmp.text = "0";
-                tmp.color = Color.grey;
             }
             else
             {
                 foreach (var item in targetPuzzleData.cellData.ColData[i])
                 {
-                    tmp.text += item + "\n";
+                    if (item >= 10)
+                    {
+                        tmp.text += $"<color=#{DoubleDigitColour}>{item}</color>\n";
+                    }
+                    else
+                    {
+                        tmp.text += $"{item}\n";
+                    }
                 }
             }
         }
@@ -81,12 +101,38 @@ public class DataValueHandler : MonoBehaviour
     {
         for (int r = 0; r < targetPuzzleData.RowCount; r++)
         {
-            rowDataHolder.GetChild(targetPuzzleData.RowCount - 1 - r).GetComponent<TextMeshProUGUI>().color = cellData.RowData[r].SequenceEqual(targetPuzzleData.cellData.RowData[r]) ? Color.grey : Color.white;
+            TextMeshProUGUI rowDataText = rowDataHolder.GetChild(targetPuzzleData.RowCount - 1 - r).GetComponent<TextMeshProUGUI>();
+            Color rowDataColour = rowDataText.color;
+
+            if (cellData.RowData[r].SequenceEqual(targetPuzzleData.cellData.RowData[r]))
+            {
+                rowDataColour.a = 0.25f;
+            }
+            else
+            {
+                rowDataColour.a = 1;
+            }
+
+            rowDataText.color = rowDataColour;
         }
 
         for (int c = 0; c < targetPuzzleData.ColCount; c++)
         {
-            colDataHolder.GetChild(targetPuzzleData.ColCount - 1 - c).GetComponent<TextMeshProUGUI>().color = cellData.ColData[c].SequenceEqual(targetPuzzleData.cellData.ColData[c]) ? Color.grey : Color.white;
+            TextMeshProUGUI colDataText = colDataHolder.GetChild(targetPuzzleData.ColCount - 1 - c).GetComponent<TextMeshProUGUI>();
+            Color colDataColour = colDataText.color;
+
+            if (cellData.ColData[c].SequenceEqual(targetPuzzleData.cellData.ColData[c]))
+            {
+                colDataColour.a = 0.25f;
+            }
+            else
+            {
+                colDataColour.a = 1;
+            }
+
+            colDataText.color = colDataColour;
         }
     }
+
+
 }

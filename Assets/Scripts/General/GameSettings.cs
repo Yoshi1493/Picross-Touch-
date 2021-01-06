@@ -141,7 +141,7 @@ public class GameSettings
     public const float DefaultFontSize = 50;
 
     //decrease font size by this much for every additional 5 rows/columns in the level
-    public const float FontSizeReductionRate = 10;
+    public const float FontSizeReductionRate = 9;
     #endregion
 
     #region Player settings
