@@ -6,46 +6,60 @@ using static Vector2Helper;
 
 public class HighlightDisplay : MonoBehaviour
 {
-    SpriteRenderer highlightSprite;
+    [SerializeField] SpriteRenderer cellHighlightSprite;
+    [SerializeField] SpriteRenderer rowHighlightSprite;
+    [SerializeField] SpriteRenderer colHighlightSprite;
 
     [SerializeField] SpriteRenderer highlightedCellCountBackground;
     TextMeshProUGUI highlightedCellCountText;
 
-    Vector2Int positionOffset = new Vector2Int(1, 1);
+    Vector2Int positionOffset = Vector2Int.one;
 
     void Awake()
     {
         FindObjectOfType<InputHandler>().HighlightStartAction += OnHighlightStart;
         FindObjectOfType<InputHandler>().HighlightEndAction += OnHighlightEnd;
 
-        highlightSprite = GetComponent<SpriteRenderer>();
-        highlightSprite.transform.localScale = CellScale;
         highlightedCellCountText = highlightedCellCountBackground.GetComponentInChildren<TextMeshProUGUI>();
+        
+        //init. highlight sprite scale + size to adjust to puzzle size
+        cellHighlightSprite.transform.localScale = CellScale;
+        rowHighlightSprite.size = new Vector2(DefaultBoardSize.x, CellScale.y);
+        colHighlightSprite.size = new Vector2(CellScale.x, DefaultBoardSize.y);
     }
 
     void OnHighlightStart(Vector2Int start, Vector2Int end)
     {
-        //set highlight overlay position
-        highlightSprite.transform.position = TransformPoint(start);
+        //set cell highlight position
+        cellHighlightSprite.transform.position = TransformPoint(start);
 
-        //determine how much to scale the sprite by
+        //set row/column highlight position
+        rowHighlightSprite.transform.position = TransformPoint(new Vector2Int(end.x, targetPuzzleData.ColCount));
+        colHighlightSprite.transform.position = TransformPoint(new Vector2Int(targetPuzzleData.RowCount, end.y));
+
+        //determine how much to scale cell highlight sprite by
         Vector2Int distance = end - start;
         Vector2Int newSize = new Vector2Int(Mathf.Abs(distance.y), Mathf.Abs(distance.x)) + Vector2Int.one;
 
+        //adjust for setting pivot at bottom-right
         if (distance.x < 0)
         {
             newSize.y *= -1;
-            highlightSprite.transform.Translate(Vector2.up * CellScale);
+            cellHighlightSprite.transform.Translate(Vector2.up * CellScale);
         }
         if (distance.y < 0)
         {
             newSize.x *= -1;
-            highlightSprite.transform.Translate(Vector2.left * CellScale);
+            cellHighlightSprite.transform.Translate(Vector2.left * CellScale);
         }
+        cellHighlightSprite.size = newSize;
 
-        highlightSprite.size = newSize;
-        highlightSprite.enabled = true;
+        //display highlight sprites
+        cellHighlightSprite.enabled = true;
+        rowHighlightSprite.enabled = true;
+        colHighlightSprite.enabled = true;
 
+        //update + display amount of highlighted cells
         highlightedCellCountText.text = Mathf.Max(Mathf.Abs(newSize.x), Mathf.Abs(newSize.y)).ToString();
         highlightedCellCountBackground.gameObject.SetActive(true);
         UpdateHighlightedCellCounter(end);
@@ -53,14 +67,16 @@ public class HighlightDisplay : MonoBehaviour
 
     void OnHighlightEnd(List<Vector2Int> selectedCells)
     {
-        highlightSprite.enabled = false;
+        cellHighlightSprite.enabled = false;
+        rowHighlightSprite.enabled = false;
+        colHighlightSprite.enabled = false;
         highlightedCellCountBackground.gameObject.SetActive(false);
     }
 
-    //update highlightedCellCountBackground position + rotation
+    //update highlightedCellCountBackground position
     void UpdateHighlightedCellCounter(Vector2Int currentCell)
     {
-        //set sprite position to follow the player's touch position
+        //set position to follow the player's touch position
         highlightedCellCountBackground.transform.position = TransformPoint(currentCell + positionOffset);
     }
 }
