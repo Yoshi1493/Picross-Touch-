@@ -280,6 +280,19 @@ public class Game : MonoBehaviour
         GameOverAction?.Invoke();
     }
 
+    bool IsBoardEmpty()
+    {
+        for (int r = 0; r < currentPuzzleData.RowCount; r++)
+        {
+            for (int c = 0; c < currentPuzzleData.ColCount; c++)
+            {
+                if (currentPuzzleData.cellData.Cells[r, c] != CellType.Empty) return false;
+            }
+        }
+
+        return true;
+    }
+
     #region Game state Functions
     public void Undo()
     {
@@ -326,13 +339,16 @@ public class Game : MonoBehaviour
 
     public void SavePuzzle()
     {
-        if (!(undoStack.Count == 0 && redoStack.Count == 0))
+        //if the board is not empty, or either the undo stack or redo stack is not empty
+        if (!IsBoardEmpty() || (undoStack.Count != 0 || redoStack.Count != 0))
         {
+            //save puzzles
             puzzles[playerSettings.selectedDiffculty][playerSettings.selectedPuzzle] = currentPuzzleData;
             FileHandler.SavePuzzles();
         }
         else
         {
+            //otherwise revert completion status back to Unopened
             currentPuzzleData.completionStatus = CompletionStatus.Unopened;
         }
     }
