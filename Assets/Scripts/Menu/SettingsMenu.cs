@@ -4,7 +4,7 @@ using static GameSettings;
 
 public class SettingsMenu : Menu
 {
-    [SerializeField] Toggle autofillToggle, sfxToggle;
+    [SerializeField] Toggle autofillToggle, clockToggle;
 
     protected override void Awake()
     {
@@ -14,13 +14,13 @@ public class SettingsMenu : Menu
 
     void InitUIObjects()
     {
-        UpdateSFXToggle();
+        UpdateClockToggle();
         UpdateAutofillToggle();
     }
 
-    void UpdateSFXToggle()
+    void UpdateClockToggle()
     {
-        sfxToggle.SetIsOnWithoutNotify(playerSettings.sfxEnabled);
+        clockToggle.SetIsOnWithoutNotify(playerSettings.clockEnabled);
     }
 
     void UpdateAutofillToggle()
@@ -28,10 +28,10 @@ public class SettingsMenu : Menu
         autofillToggle.SetIsOnWithoutNotify(playerSettings.autofillEnabled);
     }
 
-    public void OnToggleSFX()
+    public void OnToggleClock()
     {
-        playerSettings.sfxEnabled = !playerSettings.sfxEnabled;
-        UpdateSFXToggle();
+        playerSettings.clockEnabled = !playerSettings.clockEnabled;
+        UpdateClockToggle();
     }
 
     public void OnToggleAutofill()

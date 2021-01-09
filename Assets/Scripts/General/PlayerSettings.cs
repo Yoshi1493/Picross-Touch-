@@ -4,14 +4,14 @@ public class PlayerSettings
     public int selectedDiffculty;
     public int selectedPuzzle;
 
-    public bool sfxEnabled;
+    public bool clockEnabled;
     public bool autofillEnabled;
 
     public PlayerSettings()
     {
         selectedDiffculty = 0;
 
-        sfxEnabled = true;
+        clockEnabled = true;
         autofillEnabled = true;
     }
 
@@ -19,7 +19,7 @@ public class PlayerSettings
     {
         selectedDiffculty = ps.selectedDiffculty;
 
-        sfxEnabled = ps.sfxEnabled;
+        clockEnabled = ps.clockEnabled;
         autofillEnabled = ps.autofillEnabled;
     }
 }

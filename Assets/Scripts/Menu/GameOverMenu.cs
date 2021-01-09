@@ -10,6 +10,7 @@ public class GameOverMenu : Menu
 {
     [SerializeField] Image completedImage;
     [SerializeField] TextMeshProUGUI completedImageName;
+    [SerializeField] TextMeshProUGUI timeElapsedText;
 
     protected override void Awake()
     {
@@ -25,7 +26,7 @@ public class GameOverMenu : Menu
     IEnumerator DelayedOpen()
     {
         UpdateCompletedImage();
-        UpdateCompletedImageName();
+        UpdateTexts();
 
         yield return WaitForSeconds(1);
         Open();
@@ -52,8 +53,9 @@ public class GameOverMenu : Menu
         completedImage.sprite = spr;
     }
 
-    void UpdateCompletedImageName()
+    void UpdateTexts()
     {
         completedImageName.text = targetPuzzleData.name;
+        timeElapsedText.enabled = playerSettings.clockEnabled;
     }
 }

@@ -3723,7 +3723,7 @@ PrefabInstance:
     - target: {fileID: 7318164281433770710, guid: f2b241fde4f72f14dbd5ccbe88f3d2d1,
         type: 3}
       propertyPath: m_Name
-      value: SFX (Toggle)
+      value: Clock (Toggle)
       objectReference: {fileID: 0}
     - target: {fileID: 7318164281433770711, guid: f2b241fde4f72f14dbd5ccbe88f3d2d1,
         type: 3}
@@ -3773,7 +3773,7 @@ PrefabInstance:
     - target: {fileID: 7318164281433770704, guid: f2b241fde4f72f14dbd5ccbe88f3d2d1,
         type: 3}
       propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnToggleSFX
+      value: OnToggleClock
       objectReference: {fileID: 0}
     - target: {fileID: 7318164283531387166, guid: f2b241fde4f72f14dbd5ccbe88f3d2d1,
         type: 3}
@@ -3808,7 +3808,7 @@ PrefabInstance:
     - target: {fileID: 7318164283531387167, guid: f2b241fde4f72f14dbd5ccbe88f3d2d1,
         type: 3}
       propertyPath: m_text
-      value: Sound
+      value: Clock
       objectReference: {fileID: 0}
     - target: {fileID: 7318164283531387167, guid: f2b241fde4f72f14dbd5ccbe88f3d2d1,
         type: 3}
@@ -9655,7 +9655,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   autofillToggle: {fileID: 1792710092}
-  sfxToggle: {fileID: 389044635}
+  clockToggle: {fileID: 389044635}
 --- !u!1 &1011127077
 GameObject:
   m_ObjectHideFlags: 0

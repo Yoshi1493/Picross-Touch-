@@ -5,7 +5,9 @@ using static GameSettings;
 
 public class Game : MonoBehaviour
 {
+    [SerializeField] Clock clock;
     [SerializeField] Transform cellHolder;
+
     Cell[,] cells;
 
     public Stack<CellType[,]> undoStack = new Stack<CellType[,]>();
@@ -43,6 +45,9 @@ public class Game : MonoBehaviour
 
         //reset current input tool
         currentInputTool = InputTool.Pencil;
+
+        //start clock
+        clock.StartClock(currentPuzzleData.timeElapsed);
     }
 
     //if the puzzle's solution contains a fully empty row or column, automatically cross out all cells in it
@@ -339,18 +344,12 @@ public class Game : MonoBehaviour
 
     public void SavePuzzle()
     {
-        //if the board is not empty, or either the undo stack or redo stack is not empty
-        if (!IsBoardEmpty() || (undoStack.Count != 0 || redoStack.Count != 0))
-        {
-            //save puzzles
-            puzzles[playerSettings.selectedDiffculty][playerSettings.selectedPuzzle] = currentPuzzleData;
-            FileHandler.SavePuzzles();
-        }
-        else
-        {
-            //otherwise revert completion status back to Unopened
-            currentPuzzleData.completionStatus = CompletionStatus.Unopened;
-        }
+        //save amount of time passed
+        currentPuzzleData.timeElapsed = clock.CurrentTime;
+
+        //save puzzles
+        puzzles[playerSettings.selectedDiffculty][playerSettings.selectedPuzzle] = currentPuzzleData;
+        FileHandler.SavePuzzles();
     }
     #endregion
 

@@ -99,6 +99,7 @@ public class GameSettings
     {
         public string name;
         public CompletionStatus completionStatus;
+        public float timeElapsed;
 
         public CellData cellData;
         public readonly int RowCount, ColCount;
@@ -124,6 +125,8 @@ public class GameSettings
     public static Picross targetPuzzleData;             //target picross data that the player has to match in order to "win"
     public static Picross currentPuzzleData;            //player's current picross data
     public static List<Picross>[] puzzles;              //"save data" - to hold every complete and incomplete (but not unopened) puzzle
+
+    public const string TimeTextFormat = "mm':'ss";     //format Picross.timeElapsed as 00:00
     #endregion
 
     #region Input data
