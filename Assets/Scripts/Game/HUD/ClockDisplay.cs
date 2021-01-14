@@ -11,11 +11,18 @@ public class ClockDisplay : MonoBehaviour
     void Awake()
     {
         timeText = GetComponent<TextMeshProUGUI>();
-        gameObject.SetActive(playerSettings.clockEnabled);
+
+        FindObjectOfType<SettingsMenu>().ToggleClockAction += OnClockToggled;
+        OnClockToggled();
     }
 
     void Update()
     {
         timeText.text = TimeSpan.FromSeconds(clock.CurrentTime).ToString(TimeTextFormat);
+    }
+
+    void OnClockToggled()
+    {
+        gameObject.SetActive(playerSettings.clockEnabled);
     }
 }

@@ -6,10 +6,14 @@ public class SettingsMenu : Menu
 {
     [SerializeField] Toggle autofillToggle, clockToggle;
 
+    public event System.Action ToggleClockAction;
+
     protected override void Awake()
     {
         base.Awake();
         InitUIObjects();
+
+        ToggleClockAction += UpdateClockToggle;
     }
 
     void InitUIObjects()
@@ -31,7 +35,7 @@ public class SettingsMenu : Menu
     public void OnToggleClock()
     {
         playerSettings.clockEnabled = !playerSettings.clockEnabled;
-        UpdateClockToggle();
+        ToggleClockAction?.Invoke();
     }
 
     public void OnToggleAutofill()
