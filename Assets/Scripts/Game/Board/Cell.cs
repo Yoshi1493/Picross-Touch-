@@ -3,7 +3,7 @@ using static GameSettings;
 
 public class Cell : MonoBehaviour
 {
-    //[0] = filled; [0] = crossed
+    //[0] = filled; [1] = crossed
     SpriteRenderer[] childSprites = new SpriteRenderer[2];
 
     void Awake()

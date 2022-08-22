@@ -21,7 +21,7 @@ public class CameraController : MonoBehaviour
     void Awake()
     {
         mainCam = Camera.main;
-        levelSelectCamPos = CameraCropper.targetAspectRatio * mainCam.orthographicSize * 2;
+        levelSelectCamPos = CameraCropper.TargetAspectRatio * mainCam.orthographicSize * 2;
 
         if (SceneTracker.PreviousSceneIndex == 0)
         {

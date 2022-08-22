@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using static GameSettings;
@@ -13,8 +14,8 @@ public class Game : MonoBehaviour
     public Stack<CellType[,]> undoStack = new Stack<CellType[,]>();
     public Stack<CellType[,]> redoStack = new Stack<CellType[,]>();
 
-    public event System.Action<CellData> UpdateBoardAction;
-    public event System.Action GameOverAction;
+    public event Action<CellData> UpdateBoardAction;
+    public event Action GameOverAction;
 
     void Awake()
     {
@@ -44,7 +45,7 @@ public class Game : MonoBehaviour
         InitEmptyRowsAndColumns();
 
         //reset current input tool
-        currentInputTool = InputTool.Pencil;
+        currentInputTool = InputTool.Fill;
 
         //start clock
         clock.StartClock(currentPuzzleData.timeElapsed);
@@ -97,7 +98,7 @@ public class Game : MonoBehaviour
         {
             switch (currentInputTool)
             {
-                case InputTool.Pencil:
+                case InputTool.Fill:
                     switch (cells[cell.x, cell.y].CurrentCellType)
                     {
                         case CellType.Empty:
@@ -114,7 +115,7 @@ public class Game : MonoBehaviour
                     }
                     break;
 
-                case InputTool.Eraser:
+                case InputTool.Cross:
                     switch (cells[cell.x, cell.y].CurrentCellType)
                     {
                         case CellType.Empty:
@@ -272,9 +273,7 @@ public class Game : MonoBehaviour
                 {
                     //compare CellTypes; stop checking once a match isn't found
                     if (cellData.Cells[r, c] != targetPuzzleData.cellData.Cells[r, c])
-                    {
                         return;
-                    }
                 }
             }
         }
@@ -291,7 +290,10 @@ public class Game : MonoBehaviour
         {
             for (int c = 0; c < currentPuzzleData.ColCount; c++)
             {
-                if (currentPuzzleData.cellData.Cells[r, c] != CellType.Empty) return false;
+                if (currentPuzzleData.cellData.Cells[r, c] == CellType.Filled)
+                {
+                    return false;
+                }
             }
         }
 
@@ -344,12 +346,15 @@ public class Game : MonoBehaviour
 
     public void SavePuzzle()
     {
-        //save amount of time passed
-        currentPuzzleData.timeElapsed = clock.CurrentTime;
+        if (!IsBoardEmpty())
+        {
+            //save amount of time passed
+            currentPuzzleData.timeElapsed = clock.CurrentTime;
 
-        //save puzzles
-        puzzles[playerSettings.selectedDiffculty][playerSettings.selectedPuzzle] = currentPuzzleData;
-        FileHandler.SavePuzzles();
+            //save puzzles
+            puzzles[playerSettings.selectedDiffculty][playerSettings.selectedPuzzle] = currentPuzzleData;
+            FileHandler.SavePuzzles();
+        }
     }
     #endregion
 

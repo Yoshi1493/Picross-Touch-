@@ -52,7 +52,7 @@ public class DataValueHandler : MonoBehaviour
             {
                 foreach (var item in targetPuzzleData.cellData.RowData[i])
                 {
-                    //change colour of double digit numbers (ex. to differentiate between "1 1" and "11")
+                    //change colour of double digit numbers (to differentiate between "1 1" and "11")
                     if (item >= 10)
                     {
                         tmp.text += $"<color=#{DoubleDigitColour}>{item}</color> ";

@@ -13,8 +13,8 @@ public class GameSettings
 
     public enum InputTool
     {
-        Pencil,
-        Eraser
+        Fill,
+        Cross
     }
 
     public enum CompletionStatus
