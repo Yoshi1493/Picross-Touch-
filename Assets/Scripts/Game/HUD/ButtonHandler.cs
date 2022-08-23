@@ -6,7 +6,7 @@ public class ButtonHandler : MonoBehaviour
 {
     [SerializeField] Game gameController;
 
-    //0 = pencil; 1 = eraser
+    //0 = fill; 1 = cross
     [SerializeField] Button[] inputToolButtons;
 
     //0 = undo; 1 = redo
