@@ -39,11 +39,11 @@ public class MainMenu : Menu
             titleText.characterSpacing = titleAnimationCurve.Evaluate(currentLerpTime / totalLerpTime);
 
             //animate canvas alpha
-            canvasGroup.alpha = Mathf.Lerp(0, 1, currentLerpTime * 2 / totalLerpTime);
-
-            //enable canvas buttons halfway through animation
-            if (!canvasGroup.interactable && currentLerpTime / totalLerpTime > 0.5f) canvasGroup.interactable = true;
+            canvasGroup.alpha = Mathf.Lerp(0, 1, currentLerpTime);
         }
+
+        //enable canvas buttons
+        canvasGroup.interactable = true;
     }
 
 #if UNITY_ANDROID
