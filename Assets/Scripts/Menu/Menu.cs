@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 
 [RequireComponent(typeof(Canvas))]
-public class Menu : MonoBehaviour
+public abstract class Menu : MonoBehaviour
 {
     protected Canvas thisMenu;
 

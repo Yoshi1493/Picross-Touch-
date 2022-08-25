@@ -25,7 +25,6 @@ public class ScreenBlur : MonoBehaviour
 
     IEnumerator GradualBlur()
     {
-        print("bulrring..");
         float currentLerpTime = 0;
         float totalLerpTime = 0.5f;
 
