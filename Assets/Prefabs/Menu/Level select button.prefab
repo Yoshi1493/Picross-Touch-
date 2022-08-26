@@ -263,7 +263,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -16, y: -16}
+  m_SizeDelta: {x: -36, y: -36}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6646468529248296712
 CanvasRenderer:
@@ -494,6 +494,18 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 9105463872232569046, guid: 7203d3c892693704a9ef865aad51b86a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 7203d3c892693704a9ef865aad51b86a, type: 3}
+--- !u!114 &402317977858568200 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6516937292523943019, guid: 7203d3c892693704a9ef865aad51b86a,
+    type: 3}
+  m_PrefabInstance: {fileID: 6910102796274615395}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6514730287636886076 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 400087335631517279, guid: 7203d3c892693704a9ef865aad51b86a,
@@ -513,6 +525,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 0}
+  buttonFillImage: {fileID: 402317977858568200}
   puzzleIcons:
   - {fileID: 6514730288422517435}
   - {fileID: 5213793059233092991}

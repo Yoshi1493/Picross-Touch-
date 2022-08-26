@@ -14,11 +14,9 @@ public static class FileHandler
 
     public static void SaveSettings()
     {
-        BinaryFormatter bf = new BinaryFormatter();
-        using (var file = File.OpenWrite(settingsFilePath))
-        {
-            bf.Serialize(file, playerSettings);
-        }
+        BinaryFormatter bf = new();
+        using var file = File.OpenWrite(settingsFilePath);
+        bf.Serialize(file, playerSettings);
     }
 
     public static PlayerSettings LoadSettings()
@@ -28,11 +26,9 @@ public static class FileHandler
 
         try
         {
-            BinaryFormatter bf = new BinaryFormatter();
-            using (var file = File.Open(settingsFilePath, FileMode.OpenOrCreate, FileAccess.Read))
-            {
-                ps = bf.Deserialize(file) as PlayerSettings;
-            }
+            BinaryFormatter bf = new();
+            using var file = File.Open(settingsFilePath, FileMode.OpenOrCreate, FileAccess.Read);
+            ps = bf.Deserialize(file) as PlayerSettings;
         }
         catch (SerializationException)
         {
@@ -51,11 +47,9 @@ public static class FileHandler
 
     public static void SavePuzzles()
     {
-        BinaryFormatter bf = new BinaryFormatter();
-        using (var file = File.Open(saveDataFilePath, FileMode.OpenOrCreate, FileAccess.Write))
-        {
-            bf.Serialize(file, puzzles);
-        }
+        BinaryFormatter bf = new();
+        using var file = File.Open(saveDataFilePath, FileMode.OpenOrCreate, FileAccess.Write);
+        bf.Serialize(file, puzzles);
     }
 
     public static void LoadPuzzles()
@@ -65,11 +59,9 @@ public static class FileHandler
         //try to find player save data
         try
         {
-            BinaryFormatter bf = new BinaryFormatter();
-            using (var file = File.OpenRead(saveDataFilePath))
-            {
-                puzzles = bf.Deserialize(file) as List<Picross>[];
-            }
+            BinaryFormatter bf = new();
+            using var file = File.OpenRead(saveDataFilePath);
+            puzzles = bf.Deserialize(file) as List<Picross>[];
         }
         //otherwise create new save data
         catch (FileNotFoundException)
@@ -102,8 +94,8 @@ public static class FileHandler
 
         Directory.CreateDirectory(imageDirectoryPath);
 
-        Texture2D tex2D = new Texture2D(imageWidth, imageHeight);
-        Color[] pixelColours = new Color[imageWidth * imageHeight];
+        Texture2D tex2D = new(imageWidth, imageHeight);
+        Color32[] pixelColours = new Color32[imageWidth * imageHeight];
 
         //set pixel colours
         for (int row = 0; row < imageHeight; row++)
@@ -114,16 +106,14 @@ public static class FileHandler
             }
         }
 
-        tex2D.SetPixels(pixelColours);
+        tex2D.SetPixels32(pixelColours);
         tex2D.Apply();
 
         byte[] bytes = tex2D.EncodeToPNG();
 
-        BinaryFormatter bf = new BinaryFormatter();
-        using (var file = File.Open(imageFilePath, FileMode.OpenOrCreate, FileAccess.Write))
-        {
-            bf.Serialize(file, bytes);
-        }
+        BinaryFormatter bf = new();
+        using var file = File.Open(imageFilePath, FileMode.OpenOrCreate, FileAccess.Write);
+        bf.Serialize(file, bytes);
     }
 
     public static byte[] LoadCompletedImage(Picross puzzle)
@@ -132,11 +122,9 @@ public static class FileHandler
 
         try
         {
-            BinaryFormatter bf = new BinaryFormatter();
-            using (var file = File.OpenRead(imageFilePath))
-            {
-                return bf.Deserialize(file) as byte[];
-            }
+            BinaryFormatter bf = new();
+            using var file = File.OpenRead(imageFilePath);
+            return bf.Deserialize(file) as byte[];
         }
         catch (System.Exception e) when (e is FileNotFoundException || e is DirectoryNotFoundException)
         {

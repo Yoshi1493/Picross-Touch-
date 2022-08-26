@@ -36,7 +36,7 @@ public class GameOverMenu : Menu
     void UpdateCompletedImage()
     {
         byte[] texData = LoadCompletedImage(targetPuzzleData);
-        Texture2D tex2D = new Texture2D(targetPuzzleData.ColCount, targetPuzzleData.RowCount)
+        Texture2D tex2D = new(targetPuzzleData.ColCount, targetPuzzleData.RowCount)
         {
             filterMode = FilterMode.Point
         };
