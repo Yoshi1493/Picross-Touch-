@@ -14,17 +14,15 @@ public class LevelSelectButton : MonoBehaviour
 
     public void UpdateDisplay(Picross puzzle)
     {
-        UpdateCompletedImage(puzzle);
-
         //enable completion icon based on puzzle's completion status
         for (int i = 0; i < puzzleIcons.Length; i++)
         {
             puzzleIcons[i].enabled = i == (int)puzzle.completionStatus;
         }
 
-        //if puzzle is complete, also display puzzle name
         if (puzzle.completionStatus == CompletionStatus.Complete)
         {
+            UpdateCompletedImage(puzzle);
             puzzleName.text = puzzle.name;
         }
     }
@@ -53,5 +51,10 @@ public class LevelSelectButton : MonoBehaviour
         //set puzzle's "completed" icon to created sprite
         puzzleIcons[(int)CompletionStatus.Complete].sprite = spr;
         buttonFillImage.color = Color.white;
+    }
+
+    public void SaveSettings()
+    {
+        FileHandler.SaveSettings();
     }
 }

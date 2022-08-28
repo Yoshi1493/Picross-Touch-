@@ -446,6 +446,41 @@ PrefabInstance:
       propertyPath: m_Navigation.m_Mode
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 400087335631518113, guid: 7203d3c892693704a9ef865aad51b86a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 400087335631518113, guid: 7203d3c892693704a9ef865aad51b86a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400087335631518113, guid: 7203d3c892693704a9ef865aad51b86a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 8283682874024747206}
+    - target: {fileID: 400087335631518113, guid: 7203d3c892693704a9ef865aad51b86a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 400087335631518113, guid: 7203d3c892693704a9ef865aad51b86a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: SaveSettings
+      objectReference: {fileID: 0}
+    - target: {fileID: 400087335631518113, guid: 7203d3c892693704a9ef865aad51b86a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: LevelSelectButton, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 400087335631518113, guid: 7203d3c892693704a9ef865aad51b86a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 400087335631518114, guid: 7203d3c892693704a9ef865aad51b86a,
         type: 3}
       propertyPath: m_Color.b
