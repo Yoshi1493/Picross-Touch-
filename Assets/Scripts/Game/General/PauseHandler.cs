@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class PauseHandler : MonoBehaviour
 {
-    public event System.Action<bool> GamePauseAction;
+    public event Action<bool> GamePauseAction;
 
     public void SetPausedState(bool state)
     {

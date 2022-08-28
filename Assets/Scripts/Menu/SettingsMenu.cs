@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 using static GameSettings;
 
@@ -6,7 +7,7 @@ public class SettingsMenu : Menu
 {
     [SerializeField] Toggle autofillToggle, clockToggle;
 
-    public event System.Action ToggleClockAction;
+    public event Action ToggleClockAction;
 
     protected override void Awake()
     {

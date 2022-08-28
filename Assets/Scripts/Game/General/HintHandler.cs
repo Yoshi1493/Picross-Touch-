@@ -10,8 +10,6 @@ public class HintHandler : MonoBehaviour
     int hintsRemaining;     //number of hints allowed per puzzle
     int fillCount;          //number of cells to fill in per hint
 
-    float numTargetFilled;
-
     List<Vector2Int> hintCellCoordinates;
     public event System.Action<List<Vector2Int>> PerformHintAction;
     public event System.Action<string> CannotPerformHintAction;
@@ -30,9 +28,6 @@ public class HintHandler : MonoBehaviour
         ResetHintsRemaining();
         fillCount = hintsRemaining;
         hintCellCoordinates = new List<Vector2Int>(fillCount);
-
-        //set total number of filled cells in selected puzzle
-        numTargetFilled = targetPuzzleData.cellData.RowData.Sum(i => i.Sum());
     }
 
     //set starting number of hints according to board size
