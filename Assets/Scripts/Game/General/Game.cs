@@ -284,22 +284,6 @@ public class Game : MonoBehaviour
         GameOverAction?.Invoke();
     }
 
-    bool IsBoardEmpty()
-    {
-        for (int r = 0; r < currentPuzzleData.RowCount; r++)
-        {
-            for (int c = 0; c < currentPuzzleData.ColCount; c++)
-            {
-                if (currentPuzzleData.cellData.Cells[r, c] == CellType.Filled)
-                {
-                    return false;
-                }
-            }
-        }
-
-        return true;
-    }
-
     #region Game state Functions
     public void Undo()
     {
@@ -346,15 +330,20 @@ public class Game : MonoBehaviour
 
     public void SavePuzzle()
     {
-        if (!IsBoardEmpty())
+        if (!currentPuzzleData.IsEmpty())
         {
             //save amount of time passed
             currentPuzzleData.timeElapsed = clock.CurrentTime;
 
             //save puzzles
             puzzles[playerSettings.selectedDiffculty][playerSettings.selectedPuzzle] = currentPuzzleData;
-            FileHandler.SavePuzzles();
         }
+        else
+        {
+            puzzles[playerSettings.selectedDiffculty][playerSettings.selectedPuzzle].completionStatus = CompletionStatus.Unopened;
+        }
+
+        FileHandler.SavePuzzles();
     }
     #endregion
 

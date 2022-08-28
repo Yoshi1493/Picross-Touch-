@@ -114,6 +114,22 @@ public class GameSettings
         }
 
         public Picross() { }
+
+        public bool IsEmpty()
+        {
+            for (int r = 0; r < RowCount; r++)
+            {
+                for (int c = 0; c < ColCount; c++)
+                {
+                    if (cellData.Cells[r, c] == CellType.Filled)
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
     }
     #endregion
 
