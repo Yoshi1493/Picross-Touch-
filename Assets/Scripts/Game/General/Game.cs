@@ -341,6 +341,7 @@ public class Game : MonoBehaviour
         else
         {
             puzzles[playerSettings.selectedDiffculty][playerSettings.selectedPuzzle].completionStatus = CompletionStatus.Unopened;
+            puzzles[playerSettings.selectedDiffculty][playerSettings.selectedPuzzle].timeElapsed = 0f;
         }
 
         FileHandler.SavePuzzles();
