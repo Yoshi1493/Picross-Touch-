@@ -150,11 +150,11 @@ public class GameSettings
     #endregion
 
     #region Game board generation
-    public static Vector2 DefaultBoardSize = new Vector2(5f, 5f);
+    public static Vector2 DefaultBoardSize = new(5f, 5f);
 
     //for scaling certain game board elements relative to DefaultBoardSize
-    public static Vector2 CellScale => new Vector2(DefaultBoardSize.x / targetPuzzleData.ColCount, DefaultBoardSize.y / targetPuzzleData.RowCount);
-    public static Vector2 InverseCellScale => new Vector2(1 / CellScale.x, 1 / CellScale.y);
+    public static Vector2 CellScale => new(DefaultBoardSize.x / targetPuzzleData.ColCount, DefaultBoardSize.y / targetPuzzleData.RowCount);
+    public static Vector2 InverseCellScale => new(1 / CellScale.x, 1 / CellScale.y);
 
     //row/column font size for a 5x5 level
     public const float DefaultFontSize = 50;
@@ -164,7 +164,7 @@ public class GameSettings
     #endregion
 
     #region Player settings
-    public static PlayerSettings playerSettings = new PlayerSettings();
+    public static PlayerSettings playerSettings = new();
     #endregion
 
     #endregion

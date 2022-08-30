@@ -3,10 +3,10 @@ using UnityEngine;
 
 public class CoroutineHelper
 {
-    static WaitForEndOfFrame _endOfFrame = new WaitForEndOfFrame();
+    static WaitForEndOfFrame _endOfFrame = new();
     public static WaitForEndOfFrame EndOfFrame { get; }
 
-    static Dictionary<float, WaitForSeconds> _waitForSeconds = new Dictionary<float, WaitForSeconds>();
+    static Dictionary<float, WaitForSeconds> _waitForSeconds = new();
     public static WaitForSeconds WaitForSeconds(float seconds)
     {
         if (!_waitForSeconds.ContainsKey(seconds))

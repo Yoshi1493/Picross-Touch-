@@ -7,12 +7,12 @@ public class InputHandler : MonoBehaviour
 {
     Camera mainCam;
 
-    static readonly Vector2Int outOfBounds = new Vector2Int(-1, -1);
+    static readonly Vector2Int outOfBounds = new(-1, -1);
     Vector2Int startCell = outOfBounds;
     Vector2Int currentCell = outOfBounds;
     Vector2Int closestCell = outOfBounds;
 
-    List<Vector2Int> selectedCells = new List<Vector2Int>();
+    List<Vector2Int> selectedCells = new();
 
     public event Action<Vector2Int, Vector2Int> HighlightStartAction;
     public event Action<List<Vector2Int>> HighlightEndAction;
@@ -81,7 +81,7 @@ public class InputHandler : MonoBehaviour
             if (!startCell.Equals(outOfBounds))
             {
                 Vector2Int difference = closestCell - startCell;
-                Vector2Int clampedDirection = new Vector2Int(
+                Vector2Int clampedDirection = new(
                     Mathf.Clamp(difference.x, -1, 1),
                     Mathf.Clamp(difference.y, -1, 1)
                     );
@@ -90,7 +90,7 @@ public class InputHandler : MonoBehaviour
                 //add all cells from startCell to closestCell to list of cells to select
                 for (int i = 0; i <= magnitude; i++)
                 {
-                    Vector2Int offset = new Vector2Int(clampedDirection.x * i, clampedDirection.y * i);
+                    Vector2Int offset = new(clampedDirection.x * i, clampedDirection.y * i);
                     selectedCells.Add(startCell + offset);
                 }
 

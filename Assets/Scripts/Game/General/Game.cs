@@ -11,8 +11,8 @@ public class Game : MonoBehaviour
 
     Cell[,] cells;
 
-    public Stack<CellType[,]> undoStack = new Stack<CellType[,]>();
-    public Stack<CellType[,]> redoStack = new Stack<CellType[,]>();
+    public Stack<CellType[,]> undoStack = new();
+    public Stack<CellType[,]> redoStack = new();
 
     public event Action<CellData> UpdateBoardAction;
     public event Action GameOverAction;
@@ -42,7 +42,10 @@ public class Game : MonoBehaviour
             }
         }
 
-        InitEmptyRowsAndColumns();
+        if (playerSettings.autofillEnabled)
+        {
+            InitEmptyRowsAndColumns();
+        }
 
         //reset current input tool
         currentInputTool = InputTool.Fill;
@@ -52,7 +55,6 @@ public class Game : MonoBehaviour
     }
 
     //if the puzzle's solution contains a fully empty row or column, automatically cross out all cells in it
-    //do this only if player has autofill enabled in settings
     void InitEmptyRowsAndColumns()
     {
         if (!playerSettings.autofillEnabled) return;

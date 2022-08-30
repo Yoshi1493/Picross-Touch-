@@ -73,7 +73,7 @@ public class HintHandler : MonoBehaviour
     {
         hintCellCoordinates.Clear();
 
-        List<Vector2Int> unfilledCells = new List<Vector2Int>();
+        List<Vector2Int> unfilledCells = new();
 
         //get list of unfilled cells' coordinates
         for (int row = 0; row < targetPuzzleData.RowCount; row++)
