@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 using static GameSettings;
-using static CoroutineHelper;
 
 public class BoardGenerator : MonoBehaviour
 {
@@ -24,8 +22,8 @@ public class BoardGenerator : MonoBehaviour
     {
         for (int i = 1; i < targetPuzzleData.RowCount; i++)
         {
-            GameObject newGridLine = Instantiate(gridLinePrefab, gridParent) as GameObject;
-            newGridLine.transform.Translate(Vector2.up * i * CellScale.y);
+            GameObject newGridLine = Instantiate(gridLinePrefab, gridParent);
+            newGridLine.transform.Translate(i * CellScale.y * Vector2.up);
             newGridLine.transform.Rotate(Vector3.forward * 90f);
             
             if (i % 5 == 0) newGridLine.transform.localScale = new Vector3(2, 1, 1);
@@ -33,8 +31,8 @@ public class BoardGenerator : MonoBehaviour
 
         for (int i = 1; i < targetPuzzleData.ColCount; i++)
         {
-            GameObject newGridLine = Instantiate(gridLinePrefab, gridParent) as GameObject;
-            newGridLine.transform.Translate(Vector2.left * i * CellScale.x);
+            GameObject newGridLine = Instantiate(gridLinePrefab, gridParent);
+            newGridLine.transform.Translate(i * CellScale.x * Vector2.left);
             
             if (i % 5 == 0) newGridLine.transform.localScale = new Vector3(2, 1, 1);
         }
@@ -47,7 +45,7 @@ public class BoardGenerator : MonoBehaviour
         {
             for (int j = 0; j < targetPuzzleData.ColCount; j++)
             {
-                GameObject newCell = Instantiate(cellPrefab, cellParent) as GameObject;
+                GameObject newCell = Instantiate(cellPrefab, cellParent);
 
                 //[0, 0] = bottom right cell
                 newCell.transform.Translate(Vector3.up * i);
