@@ -11,7 +11,7 @@ public abstract class Menu : MonoBehaviour
         thisMenu = GetComponent<Canvas>();
     }
 
-    public void Open()
+    public virtual void Open()
     {
         thisMenu.enabled = true;
         if (thisMenu.TryGetComponent(out Menu m)) m.Enable();
