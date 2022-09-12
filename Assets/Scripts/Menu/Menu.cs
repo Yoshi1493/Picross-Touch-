@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Canvas))]
@@ -6,9 +7,13 @@ public abstract class Menu : MonoBehaviour
 {
     protected Canvas thisMenu;
 
+    BackgroundController backgroundController;
+    IEnumerator sceneTransitionCoroutine;
+
     protected virtual void Awake()
     {
         thisMenu = GetComponent<Canvas>();
+        backgroundController = FindObjectOfType<BackgroundController>();
     }
 
     public virtual void Open()
@@ -45,8 +50,20 @@ public abstract class Menu : MonoBehaviour
         enabled = true;
     }
 
-    public void LoadScene(int sceneIndex)
+    public void LoadSceneAfterDelay(int sceneIndex)
     {
+        if (sceneTransitionCoroutine != null)
+        {
+            StopCoroutine(sceneTransitionCoroutine);
+        }
+
+        sceneTransitionCoroutine = _LoadSceneAfterDelay(sceneIndex);
+        StartCoroutine(sceneTransitionCoroutine);
+    }
+
+    IEnumerator _LoadSceneAfterDelay(int sceneIndex)
+    {
+        yield return backgroundController.FadeBackground(0f, 1f, 0.5f);
         UnityEngine.SceneManagement.SceneManager.LoadScene(sceneIndex);
     }
 

@@ -123,7 +123,7 @@ public class LevelSelectMenu : Menu
         else
         {
             currentPuzzleData.completionStatus = CompletionStatus.Incomplete;
-            LoadScene(2);
+            LoadSceneAfterDelay(2);
         }
     }
 
