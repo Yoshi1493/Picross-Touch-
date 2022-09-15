@@ -1,7 +1,6 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using static CoroutineHelper;
 
 public class BackgroundController : MonoBehaviour
@@ -30,6 +29,7 @@ public class BackgroundController : MonoBehaviour
         Color c = blackBackground.color;
         c.a = startAlpha;
         blackBackground.color = c;
+        SetRaycastTarget();
 
         while (blackBackground.color.a != endAlpha)
         {
@@ -44,5 +44,11 @@ public class BackgroundController : MonoBehaviour
 
         c.a = endAlpha;
         blackBackground.color = c;
+        SetRaycastTarget();
+    }
+
+    void SetRaycastTarget()
+    {
+        blackBackground.raycastTarget = blackBackground.color.a > 0;
     }
 }
