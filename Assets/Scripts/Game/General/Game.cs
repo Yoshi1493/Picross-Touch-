@@ -351,7 +351,7 @@ public class Game : MonoBehaviour
     #endregion
 
     #region DEBUG
-    public void FlipPuzzle()
+    public void FlipPuzzleX()
     {
         CellType[,] tempCopy = currentPuzzleData.cellData.Cells.Clone() as CellType[,];
 
@@ -360,6 +360,21 @@ public class Game : MonoBehaviour
             for (int j = 0; j < currentPuzzleData.ColCount; j++)
             {
                 tempCopy[i, j] = currentPuzzleData.cellData.Cells[i, currentPuzzleData.ColCount - 1 - j];
+            }
+        }
+
+        RedrawGameBoard(tempCopy);
+    }
+
+    public void FlipPuzzleY()
+    {
+        CellType[,] tempCopy = currentPuzzleData.cellData.Cells.Clone() as CellType[,];
+
+        for (int i = 0; i < currentPuzzleData.RowCount; i++)
+        {
+            for (int j = 0; j < currentPuzzleData.ColCount; j++)
+            {
+                tempCopy[i, j] = currentPuzzleData.cellData.Cells[currentPuzzleData.RowCount - 1 - i, j];
             }
         }
 
