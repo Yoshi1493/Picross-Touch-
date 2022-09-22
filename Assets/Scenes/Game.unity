@@ -4082,30 +4082,20 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 519420035}
     m_Modifications:
-    - target: {fileID: 2083627901054039831, guid: 9156c03c3c5244b4b985969b98265d17,
+    - target: {fileID: 2083627901054039828, guid: 9156c03c3c5244b4b985969b98265d17,
         type: 3}
-      propertyPath: m_Color.a
+      propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2083627901054039831, guid: 9156c03c3c5244b4b985969b98265d17,
         type: 3}
-      propertyPath: m_Color.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2083627901054039831, guid: 9156c03c3c5244b4b985969b98265d17,
-        type: 3}
-      propertyPath: m_Color.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2083627901054039831, guid: 9156c03c3c5244b4b985969b98265d17,
-        type: 3}
-      propertyPath: m_Color.r
+      propertyPath: m_MaskInteraction
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2083627901469209640, guid: 9156c03c3c5244b4b985969b98265d17,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2083627901469209640, guid: 9156c03c3c5244b4b985969b98265d17,
         type: 3}
@@ -4127,6 +4117,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Background FX
       objectReference: {fileID: 0}
+    - target: {fileID: 7754006470014494296, guid: 9156c03c3c5244b4b985969b98265d17,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 72cea2af4f7aad04381e00463f98079f,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9156c03c3c5244b4b985969b98265d17, type: 3}
 --- !u!4 &637594828 stripped
