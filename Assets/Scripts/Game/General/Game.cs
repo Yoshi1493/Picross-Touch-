@@ -431,6 +431,17 @@ public class Game : MonoBehaviour
 
         return output;
     }
+
+    public void LoadDataToCurrentLevel(string[,] data)
+    {
+        for (int r = 0; r < data.GetLength(0); r++)
+        {
+            for (int c = 0; c < data.GetLength(1); c++)
+            {
+                SetCellType(r, c, (CellType)int.Parse(data[data.GetLength(0) - 1 - r, c]));
+            }
+        }
+    }
 #endif
     #endregion
 }
