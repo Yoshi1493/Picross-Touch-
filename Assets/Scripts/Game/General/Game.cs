@@ -438,7 +438,7 @@ public class Game : MonoBehaviour
         {
             for (int c = 0; c < data.GetLength(1); c++)
             {
-                SetCellType(r, c, (CellType)int.Parse(data[data.GetLength(0) - 1 - r, c]));
+                SetCellType(r, c, (CellType)int.Parse(data[data.GetLength(0) - 1 - r, data.GetLength(1) - 1 - c]));
             }
         }
     }
