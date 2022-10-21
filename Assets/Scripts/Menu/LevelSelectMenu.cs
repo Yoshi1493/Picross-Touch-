@@ -13,7 +13,14 @@ public class LevelSelectMenu : Menu
     [SerializeField] GameObject[] boardSizeChangeButtons = new GameObject[2];
     [SerializeField] TextMeshProUGUI boardSizeText;
 
+    [Space]
+
     [SerializeField] LevelConfirmMenu confirmSelectMenu;
+
+    [Space]
+
+    [SerializeField] AudioClip selectSfx;
+    [SerializeField] AudioClip confirmSelectSfx;
 
     protected override void Awake()
     {
@@ -116,12 +123,16 @@ public class LevelSelectMenu : Menu
         if (currentPuzzleData.completionStatus == CompletionStatus.Complete)
         {
             confirmSelectMenu.Open();
+            PlaySound(confirmSelectSfx);
+
             confirmSelectMenu.confirmButton.onClick.AddListener(() => ResetLevel());
             Disable();
         }
         //otherwise update current puzzle completion status to Incomplete, and go straight to Game scene
         else
         {
+            PlaySound(selectSfx);
+
             currentPuzzleData.completionStatus = CompletionStatus.Incomplete;
             LoadSceneAfterDelay(2);
         }

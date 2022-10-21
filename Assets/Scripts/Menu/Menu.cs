@@ -73,7 +73,7 @@ public abstract class Menu : MonoBehaviour
 
     public void PlaySound(AudioClip clip)
     {
-        if (playerSettings.soundEnabled)
+        if (clip != null && playerSettings.soundEnabled)
         {
             aux.PlayOneShot(clip);
         }

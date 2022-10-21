@@ -458,6 +458,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400087335631518113, guid: 7203d3c892693704a9ef865aad51b86a,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400087335631518113, guid: 7203d3c892693704a9ef865aad51b86a,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 8283682874024747206}
@@ -468,12 +473,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400087335631518113, guid: 7203d3c892693704a9ef865aad51b86a,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 400087335631518113, guid: 7203d3c892693704a9ef865aad51b86a,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
       value: SaveSettings
       objectReference: {fileID: 0}
     - target: {fileID: 400087335631518113, guid: 7203d3c892693704a9ef865aad51b86a,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: LevelSelectButton, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 400087335631518113, guid: 7203d3c892693704a9ef865aad51b86a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
       value: LevelSelectButton, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 400087335631518113, guid: 7203d3c892693704a9ef865aad51b86a,
