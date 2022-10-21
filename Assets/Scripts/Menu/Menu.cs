@@ -1,11 +1,14 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using static GameSettings;
 
 [RequireComponent(typeof(Canvas))]
 public abstract class Menu : MonoBehaviour
 {
     protected Canvas thisMenu;
+
+    AudioSource aux;
 
     BackgroundController backgroundController;
     IEnumerator sceneTransitionCoroutine;
@@ -13,6 +16,7 @@ public abstract class Menu : MonoBehaviour
     protected virtual void Awake()
     {
         thisMenu = GetComponent<Canvas>();
+        aux = FindObjectOfType<AudioSource>();
         backgroundController = FindObjectOfType<BackgroundController>();
     }
 
@@ -65,6 +69,14 @@ public abstract class Menu : MonoBehaviour
     {
         yield return backgroundController.FadeBackground(0f, 1f, 0.5f);
         UnityEngine.SceneManagement.SceneManager.LoadScene(sceneIndex);
+    }
+
+    public void PlaySound(AudioClip clip)
+    {
+        if (playerSettings.soundEnabled)
+        {
+            aux.PlayOneShot(clip);
+        }
     }
 
 #if UNITY_ANDROID

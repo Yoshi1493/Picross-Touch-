@@ -6,6 +6,7 @@ public class PlayerSettings
 
     public bool clockEnabled;
     public bool autofillEnabled;
+    public bool soundEnabled;
 
     public PlayerSettings()
     {
@@ -13,6 +14,7 @@ public class PlayerSettings
 
         clockEnabled = true;
         autofillEnabled = true;
+        soundEnabled = true;
     }
 
     public void UpdateSettings(PlayerSettings ps)
@@ -21,5 +23,6 @@ public class PlayerSettings
 
         clockEnabled = ps.clockEnabled;
         autofillEnabled = ps.autofillEnabled;
+        soundEnabled = ps.soundEnabled;
     }
 }

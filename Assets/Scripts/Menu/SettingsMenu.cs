@@ -5,7 +5,7 @@ using static GameSettings;
 
 public class SettingsMenu : Menu
 {
-    [SerializeField] Toggle autofillToggle, clockToggle;
+    [SerializeField] Toggle autofillToggle, clockToggle, soundToggle;
 
     public event Action ToggleClockAction;
 
@@ -19,8 +19,14 @@ public class SettingsMenu : Menu
 
     void InitUIObjects()
     {
-        UpdateClockToggle();
         UpdateAutofillToggle();
+        UpdateClockToggle();
+        UpdateSoundToggle();
+    }
+
+    void UpdateAutofillToggle()
+    {
+        autofillToggle.SetIsOnWithoutNotify(playerSettings.autofillEnabled);
     }
 
     void UpdateClockToggle()
@@ -28,9 +34,17 @@ public class SettingsMenu : Menu
         clockToggle.SetIsOnWithoutNotify(playerSettings.clockEnabled);
     }
 
-    void UpdateAutofillToggle()
+    void UpdateSoundToggle()
     {
-        autofillToggle.SetIsOnWithoutNotify(playerSettings.autofillEnabled);
+        soundToggle.SetIsOnWithoutNotify(playerSettings.soundEnabled);
+    }
+
+    #region Button functions
+
+    public void OnToggleAutofill()
+    {
+        playerSettings.autofillEnabled = !playerSettings.autofillEnabled;
+        UpdateAutofillToggle();
     }
 
     public void OnToggleClock()
@@ -39,11 +53,13 @@ public class SettingsMenu : Menu
         ToggleClockAction?.Invoke();
     }
 
-    public void OnToggleAutofill()
+    public void OnToggleSound()
     {
-        playerSettings.autofillEnabled = !playerSettings.autofillEnabled;
-        UpdateAutofillToggle();
+        playerSettings.soundEnabled = !playerSettings.soundEnabled;
+        UpdateSoundToggle();
     }
+
+    #endregion
 
     public void SaveSettings()
     {
