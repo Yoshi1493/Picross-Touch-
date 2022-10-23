@@ -2374,10 +2374,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraController: {fileID: 519420034}
   levelSelectScreens:
-  - {fileID: 185181982}
-  - {fileID: 1744622062}
-  - {fileID: 216906304}
-  - {fileID: 1011127077}
+  - {fileID: 185181983}
+  - {fileID: 1744622064}
+  - {fileID: 216906306}
+  - {fileID: 1011127079}
   boardSizeChangeButtons:
   - {fileID: 259036994}
   - {fileID: 2097783372}

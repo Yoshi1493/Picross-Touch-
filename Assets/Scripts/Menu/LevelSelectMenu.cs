@@ -7,7 +7,8 @@ public class LevelSelectMenu : Menu
 {
     [SerializeField] CameraController cameraController;
 
-    [SerializeField] GameObject[] levelSelectScreens = new GameObject[DifficultyCount];
+    [SerializeField] RectTransform[] levelSelectScreens = new RectTransform[DifficultyCount];
+    (float, float)[] levelSelectScreenPositions = new (float, float)[DifficultyCount];
 
     //0 = diff up; 1 = diff down
     [SerializeField] GameObject[] boardSizeChangeButtons = new GameObject[2];
@@ -25,7 +26,7 @@ public class LevelSelectMenu : Menu
     protected override void Awake()
     {
         base.Awake();
-        InitPuzzles();
+        Initialize();
 
         if (cameraController.currentScreen == CameraController.CurrentScreen.LevelSelect)
         {
@@ -34,7 +35,7 @@ public class LevelSelectMenu : Menu
     }
 
     //add new Picross object for every level select icon in all elements of levelSelectScreens
-    void InitPuzzles()
+    void Initialize()
     {
         for (int i = 0; i < DifficultyCount; i++)
         {
@@ -47,15 +48,8 @@ public class LevelSelectMenu : Menu
                     puzzles[i].Add(new Picross());
                 }
             }
-            else
-            {
-                if (puzzles[i].Count == levelCount) continue;
 
-                for (int j = puzzles[i].Count; j < levelCount; j++)
-                {
-                    puzzles[i].Add(new Picross());
-                }
-            }
+            levelSelectScreenPositions[i] = playerSettings.levelSelectScreenPositions[i];
         }
 
         FileHandler.SavePuzzles();
@@ -79,7 +73,7 @@ public class LevelSelectMenu : Menu
         //display level select screen based on player settings
         for (int i = 0; i < levelSelectScreens.Length; i++)
         {
-            levelSelectScreens[i].SetActive(i == playerSettings.selectedDiffculty);
+            levelSelectScreens[i].gameObject.SetActive(i == playerSettings.selectedDiffculty);
         }
     }
 
@@ -87,9 +81,13 @@ public class LevelSelectMenu : Menu
     {
         for (int i = 0; i < DifficultyCount; i++)
         {
+            //update screen positions
+            levelSelectScreens[i].anchoredPosition = new Vector2(levelSelectScreenPositions[i].Item1, levelSelectScreenPositions[i].Item2);
+
+            //update icon display based puzzle completion status
             for (int j = 0; j < puzzles[i].Count; j++)
             {
-                levelSelectScreens[i].transform.GetChild(j).GetComponent<LevelSelectButton>().UpdateDisplay(puzzles[i][j]);
+                levelSelectScreens[i].GetChild(j).GetComponent<LevelSelectButton>().UpdateDisplay(puzzles[i][j]);
             }
         }
     }
@@ -118,6 +116,14 @@ public class LevelSelectMenu : Menu
         {
             currentPuzzleData = new Picross(targetPuzzleData.name, new CellType[targetPuzzleData.RowCount, targetPuzzleData.ColCount]);
         }
+
+        //update puzzle screen positions
+        for (int i = 0; i < DifficultyCount; i++)
+        {
+            levelSelectScreenPositions[i] = (levelSelectScreens[i].anchoredPosition.x, levelSelectScreens[i].anchoredPosition.y);
+        }
+
+        playerSettings.SaveLevelSelectScreenPositions(levelSelectScreenPositions);
 
         //if selected puzzle is already complete, open confirm select menu
         if (currentPuzzleData.completionStatus == CompletionStatus.Complete)
