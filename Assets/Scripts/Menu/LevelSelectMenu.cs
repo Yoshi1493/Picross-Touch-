@@ -8,7 +8,7 @@ public class LevelSelectMenu : Menu
     [SerializeField] CameraController cameraController;
 
     [SerializeField] RectTransform[] levelSelectScreens = new RectTransform[DifficultyCount];
-    (float, float)[] levelSelectScreenPositions = new (float, float)[DifficultyCount];
+    (float x, float y)[] levelSelectScreenPositions = new (float, float)[DifficultyCount];
 
     //0 = diff up; 1 = diff down
     [SerializeField] GameObject[] boardSizeChangeButtons = new GameObject[2];
@@ -34,9 +34,9 @@ public class LevelSelectMenu : Menu
         }
     }
 
-    //add new Picross object for every level select icon in all elements of levelSelectScreens
     void Initialize()
     {
+        //add new Picross object for every level select icon in all elements of levelSelectScreens
         for (int i = 0; i < DifficultyCount; i++)
         {
             int levelCount = levelSelectScreens[i].transform.childCount;
@@ -48,8 +48,24 @@ public class LevelSelectMenu : Menu
                     puzzles[i].Add(new Picross());
                 }
             }
+        }
 
-            levelSelectScreenPositions[i] = playerSettings.levelSelectScreenPositions[i];
+        //set screen positions based on player settings
+        if (playerSettings.levelSelectScreenPositions == null)
+        {
+            playerSettings.SaveLevelSelectScreenPositions(new (float, float)[DifficultyCount]);
+
+            for (int i = 0; i < DifficultyCount; i++)
+            {
+                levelSelectScreenPositions[i] = (levelSelectScreens[i].anchoredPosition.x, levelSelectScreens[i].anchoredPosition.y);
+            }
+        }
+        else
+        {
+            for (int i = 0; i < DifficultyCount; i++)
+            {
+                levelSelectScreenPositions[i] = playerSettings.levelSelectScreenPositions[i];
+            }
         }
 
         FileHandler.SavePuzzles();
@@ -82,7 +98,7 @@ public class LevelSelectMenu : Menu
         for (int i = 0; i < DifficultyCount; i++)
         {
             //update screen positions
-            levelSelectScreens[i].anchoredPosition = new Vector2(levelSelectScreenPositions[i].Item1, levelSelectScreenPositions[i].Item2);
+            levelSelectScreens[i].anchoredPosition = new Vector2(levelSelectScreenPositions[i].x, levelSelectScreenPositions[i].y);
 
             //update icon display based puzzle completion status
             for (int j = 0; j < puzzles[i].Count; j++)

@@ -8,7 +8,7 @@ public class PlayerSettings
     public bool autofillEnabled;
     public bool soundEnabled;
 
-    public (float, float)[] levelSelectScreenPositions;
+    public (float x, float y)[] levelSelectScreenPositions;
 
     public PlayerSettings()
     {
@@ -17,8 +17,6 @@ public class PlayerSettings
         clockEnabled = true;
         autofillEnabled = true;
         soundEnabled = true;
-
-        levelSelectScreenPositions = new (float, float)[GameSettings.DifficultyCount];
     }
 
     public void UpdateSettings(PlayerSettings ps)
@@ -32,9 +30,6 @@ public class PlayerSettings
 
     public void SaveLevelSelectScreenPositions((float, float)[] positions)
     {
-        for (int i = 0; i < positions.Length; i++)
-        {
-            levelSelectScreenPositions[i] = positions[i];
-        }
+        levelSelectScreenPositions = positions;
     }
 }
