@@ -43,4 +43,9 @@ public class ButtonHandler : MonoBehaviour
     {
         OnPausedStateChanged(true);
     }
+
+    public void PlaySound(AudioClip clip)
+    {
+        AudioController.Instance.PlaySound(clip);
+    }
 }
