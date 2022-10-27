@@ -28,8 +28,9 @@ public class BackgroundController : MonoBehaviour
 
         Color c = blackBackground.color;
         c.a = startAlpha;
+
         blackBackground.color = c;
-        SetRaycastTarget();
+        blackBackground.raycastTarget = true;
 
         while (blackBackground.color.a != endAlpha)
         {
@@ -43,12 +44,8 @@ public class BackgroundController : MonoBehaviour
         }
 
         c.a = endAlpha;
-        blackBackground.color = c;
-        SetRaycastTarget();
-    }
 
-    void SetRaycastTarget()
-    {
-        blackBackground.raycastTarget = blackBackground.color.a > 0;
+        blackBackground.color = c;
+        blackBackground.raycastTarget = false;
     }
 }
