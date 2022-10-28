@@ -49,8 +49,11 @@ public class MainMenu : Menu
 #if UNITY_ANDROID
     protected override void HandleBackButtonInput()
     {
-        AndroidJavaObject androidJavaObject = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
-        androidJavaObject.Call<bool>("moveTaskToBack", true);
+        if (cameraController.currentScreen == CameraController.CurrentScreen.MainMenu)
+        {
+            AndroidJavaObject androidJavaObject = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
+            androidJavaObject.Call<bool>("moveTaskToBack", true);
+        }
     }
 #endif
 }
