@@ -3161,6 +3161,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 185181983}
+  - component: {fileID: 185181986}
+  - component: {fileID: 185181985}
   - component: {fileID: 185181984}
   m_Layer: 5
   m_Name: Level Select buttons [5x5]
@@ -3237,6 +3239,44 @@ MonoBehaviour:
   m_Spacing: {x: 50, y: 150}
   m_Constraint: 1
   m_ConstraintCount: 4
+--- !u!222 &185181985
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 185181982}
+  m_CullTransparentMesh: 1
+--- !u!114 &185181986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 185181982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &189791799
 GameObject:
   m_ObjectHideFlags: 0
@@ -3960,6 +4000,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 216906306}
+  - component: {fileID: 216906308}
+  - component: {fileID: 216906307}
   - component: {fileID: 216906305}
   m_Layer: 5
   m_Name: Level Select buttons [15x15]
@@ -4036,6 +4078,44 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -293}
   m_SizeDelta: {x: 0, y: 586}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &216906307
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 216906304}
+  m_CullTransparentMesh: 1
+--- !u!114 &216906308
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 216906304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &225134373
 GameObject:
   m_ObjectHideFlags: 0
@@ -20318,6 +20398,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1011127079}
+  - component: {fileID: 1011127081}
+  - component: {fileID: 1011127080}
   - component: {fileID: 1011127078}
   m_Layer: 5
   m_Name: Level Select buttons [20x20]
@@ -20394,6 +20476,44 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -293}
   m_SizeDelta: {x: 0, y: 586}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &1011127080
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1011127077}
+  m_CullTransparentMesh: 1
+--- !u!114 &1011127081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1011127077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1001 &1026279347
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -33873,6 +33993,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1744622064}
+  - component: {fileID: 1744622066}
+  - component: {fileID: 1744622065}
   - component: {fileID: 1744622063}
   m_Layer: 5
   m_Name: Level Select buttons [10x10]
@@ -33949,6 +34071,44 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -293}
   m_SizeDelta: {x: 0, y: 586}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &1744622065
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1744622062}
+  m_CullTransparentMesh: 1
+--- !u!114 &1744622066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1744622062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &1752539412
 GameObject:
   m_ObjectHideFlags: 0
