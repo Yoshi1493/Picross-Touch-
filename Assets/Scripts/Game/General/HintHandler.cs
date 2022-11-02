@@ -41,11 +41,6 @@ public class HintHandler : MonoBehaviour
     {
         hintsRemaining = amount;
         hintsRemainingText.text = $"Hint:\n{amount}";
-
-        if (amount <= 0)
-        {
-            hintButton.interactable = false;
-        }
     }
 
     public void OnSelectHint()
@@ -64,7 +59,7 @@ public class HintHandler : MonoBehaviour
         }
         else
         {
-            CannotPerformHintAction?.Invoke("No more hints remaining!");
+            CannotPerformHintAction?.Invoke("No more hints remaining.");
         }
     }
 
