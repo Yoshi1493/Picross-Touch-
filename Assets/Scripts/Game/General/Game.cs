@@ -21,7 +21,6 @@ public class Game : MonoBehaviour
     {
         UpdateBoardAction += AutofillEmptyCells;
         UpdateBoardAction += CheckGameOver;
-        GameOverAction += SavePuzzle;
 
         GetComponent<InputHandler>().HighlightEndAction += SetCells;
         FindObjectOfType<HintHandler>().PerformHintAction += FillHintCells;
@@ -281,9 +280,9 @@ public class Game : MonoBehaviour
         }
 
         //if all filled cells in game match text file data, call gameover functions
-        currentPuzzleData.completionStatus = CompletionStatus.Complete;
-        targetPuzzleData.SaveAsCompletedImage();
         GameOverAction?.Invoke();
+        targetPuzzleData.SaveAsCompletedImage();
+        SavePuzzle(true);
     }
 
     #region Game state Functions
@@ -330,14 +329,13 @@ public class Game : MonoBehaviour
         UpdateBoardAction.Invoke(currentPuzzleData.cellData);
     }
 
-    public void SavePuzzle()
+    public void SavePuzzle(bool isPuzzleComplete)
     {
         if (!currentPuzzleData.IsEmpty())
         {
-            //save amount of time passed
+            currentPuzzleData.completionStatus = isPuzzleComplete ? CompletionStatus.Complete : CompletionStatus.Incomplete;
             currentPuzzleData.timeElapsed = clock.CurrentTime;
 
-            //save puzzles
             puzzles[playerSettings.selectedDiffculty][playerSettings.selectedPuzzle] = currentPuzzleData;
         }
         else

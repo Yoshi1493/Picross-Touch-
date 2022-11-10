@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameSettings
 {
     #region Enums
+
     public enum CellType
     {
         Empty,
@@ -23,10 +25,12 @@ public class GameSettings
         Incomplete,
         Complete
     }
+
     #endregion
 
     #region Data structures
-    [System.Serializable]
+
+    [Serializable]
     public struct CellData
     {
         public readonly CellType[,] Cells;
@@ -94,7 +98,7 @@ public class GameSettings
         }
     }
 
-    [System.Serializable]
+    [Serializable]
     public class Picross
     {
         public string name;
@@ -131,11 +135,13 @@ public class GameSettings
             return true;
         }
     }
+
     #endregion
 
     #region Variables
 
     #region Puzzle data
+
     public const int DifficultyCount = 4;               //5x5, 10x10, 15x15, 20x20
 
     public static Picross targetPuzzleData;             //target picross data that the player has to match in order to "win"
@@ -143,13 +149,17 @@ public class GameSettings
     public static List<Picross>[] puzzles;              //"save data" - to hold every complete and incomplete (but not unopened) puzzle
 
     public const string TimeTextFormat = "mm':'ss";     //format Picross.timeElapsed as 00:00
+
     #endregion
 
     #region Input data
+
     public static InputTool currentInputTool;
+
     #endregion
 
     #region Game board generation
+
     public static Vector2 DefaultBoardSize = new(5f, 5f);
 
     //for scaling certain game board elements relative to DefaultBoardSize
@@ -161,10 +171,13 @@ public class GameSettings
 
     //decrease font size by this much for every additional 5 rows/columns in the level
     public const float FontSizeReductionRate = 9;
+
     #endregion
 
     #region Player settings
+
     public static PlayerSettings playerSettings = new();
+
     #endregion
 
     #endregion
