@@ -119,20 +119,20 @@ public class GameSettings
 
         public Picross() { }
 
-        public bool IsEmpty()
+        public bool IsNotEmpty()
         {
             for (int r = 0; r < RowCount; r++)
             {
                 for (int c = 0; c < ColCount; c++)
                 {
-                    if (cellData.Cells[r, c] == CellType.Filled)
+                    if (cellData.Cells[r, c] != CellType.Empty)
                     {
-                        return false;
+                        return true;
                     }
                 }
             }
 
-            return true;
+            return false;
         }
     }
 

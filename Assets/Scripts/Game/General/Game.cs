@@ -331,7 +331,7 @@ public class Game : MonoBehaviour
 
     public void SavePuzzle(bool isPuzzleComplete)
     {
-        if (!currentPuzzleData.IsEmpty())
+        if (currentPuzzleData.IsNotEmpty())
         {
             currentPuzzleData.completionStatus = isPuzzleComplete ? CompletionStatus.Complete : CompletionStatus.Incomplete;
             currentPuzzleData.timeElapsed = clock.CurrentTime;

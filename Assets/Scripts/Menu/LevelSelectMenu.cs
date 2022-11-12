@@ -154,8 +154,6 @@ public class LevelSelectMenu : Menu
         else
         {
             PlaySound(selectSfx);
-
-            currentPuzzleData.completionStatus = CompletionStatus.Incomplete;
             LoadSceneAfterDelay(2);
         }
     }
