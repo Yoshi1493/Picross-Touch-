@@ -41,10 +41,8 @@ public class Game : MonoBehaviour
             }
         }
 
-        if (playerSettings.autofillEnabled)
-        {
-            InitEmptyRowsAndColumns();
-        }
+        InitEmptyRowsAndColumns();
+        UpdateRowColumnData();
 
         //reset current input tool
         currentInputTool = InputTool.Fill;
@@ -260,6 +258,7 @@ public class Game : MonoBehaviour
                 }
             }
         }
+
     }
 
     //check if current puzzle data matches loaded puzzle data

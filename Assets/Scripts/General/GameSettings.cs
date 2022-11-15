@@ -134,6 +134,20 @@ public class GameSettings
 
             return false;
         }
+
+        public void Reset()
+        {
+            completionStatus = CompletionStatus.Unopened;
+            timeElapsed = 0f;
+
+            for (int r = 0; r < RowCount; r++)
+            {
+                for (int c = 0; c < ColCount; c++)
+                {
+                    cellData.Cells[r, c] = CellType.Empty;
+                }
+            }
+        }
     }
 
     #endregion

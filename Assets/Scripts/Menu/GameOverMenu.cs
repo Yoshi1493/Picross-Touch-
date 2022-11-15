@@ -25,10 +25,11 @@ public class GameOverMenu : Menu
 
     IEnumerator DelayedOpen()
     {
+        yield return WaitForSeconds(1);
+
         UpdateCompletedImage();
         UpdateTexts();
 
-        yield return WaitForSeconds(1);
         Open();
     }
 

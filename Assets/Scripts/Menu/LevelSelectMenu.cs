@@ -8,7 +8,7 @@ public class LevelSelectMenu : Menu
     [SerializeField] CameraController cameraController;
 
     [SerializeField] RectTransform[] levelSelectScreens = new RectTransform[DifficultyCount];
-    (float x, float y)[] levelSelectScreenPositions = new (float, float)[DifficultyCount];
+    readonly (float x, float y)[] levelSelectScreenPositions = new (float, float)[DifficultyCount];
 
     //0 = diff up; 1 = diff down
     [SerializeField] GameObject[] boardSizeChangeButtons = new GameObject[2];
@@ -36,25 +36,58 @@ public class LevelSelectMenu : Menu
 
     void Initialize()
     {
-        //add new Picross object for every level select icon in all elements of levelSelectScreens
-        for (int i = 0; i < DifficultyCount; i++)
-        {
-            int levelCount = levelSelectScreens[i].transform.childCount;
+        ValidatePuzzles();
+        SetLevelSelectScreenPositions();
+        FileHandler.SavePuzzles();
+    }
 
-            if (puzzles[i].Count == 0)
+    void ValidatePuzzles()
+    {
+        //for each level select screen
+        for (int i = 0; i < levelSelectScreens.Length; i++)
+        {
+            int currentPuzzleCount = puzzles[i].Count;
+            int totalLevelCount = levelSelectScreens[i].transform.childCount;
+
+            //if amount of saved puzzle data objects is less than amount of icons in level select screen
+            if (currentPuzzleCount < totalLevelCount)
             {
-                for (int j = 0; j < levelCount; j++)
+                for (int _ = currentPuzzleCount; _ < totalLevelCount; _++)
                 {
                     puzzles[i].Add(new Picross());
                 }
             }
+
+            //confirm match between saved puzzle data and puzzle data in level select menu icon
+            for (int ii = 0; ii < totalLevelCount; ii++)
+            {
+                //only check puzzles that have been opened
+                if (puzzles[i][ii].completionStatus != CompletionStatus.Unopened)
+                {
+                    Picross targetPuzzle = levelSelectScreens[i].GetChild(ii).GetComponent<LevelSelectButton>().data.ConvertToPicross();
+
+                    //if it doesn't match, replace puzzle and clear puzzle data
+                    if (puzzles[i][ii].name != targetPuzzle.name)
+                    {
+                        puzzles[i][ii] = targetPuzzle;
+                        puzzles[i][ii].Reset();
+                    }
+                }
+            }
         }
 
-        //set screen positions based on player settings
+    }
+
+    //set screen positions based on player settings
+    void SetLevelSelectScreenPositions()
+    {
+        //if no saved settings are found,
         if (playerSettings.levelSelectScreenPositions == null)
         {
+            //initialize array
             playerSettings.SaveLevelSelectScreenPositions(new (float, float)[DifficultyCount]);
 
+            //set default level select screen positions
             for (int i = 0; i < DifficultyCount; i++)
             {
                 levelSelectScreenPositions[i] = (levelSelectScreens[i].anchoredPosition.x, levelSelectScreens[i].anchoredPosition.y);
@@ -62,13 +95,12 @@ public class LevelSelectMenu : Menu
         }
         else
         {
+            //otherwise set level select screen positions to respective saved positions in PlayerSettings
             for (int i = 0; i < DifficultyCount; i++)
             {
                 levelSelectScreenPositions[i] = playerSettings.levelSelectScreenPositions[i];
             }
         }
-
-        FileHandler.SavePuzzles();
     }
 
     void Start()
@@ -101,9 +133,9 @@ public class LevelSelectMenu : Menu
             levelSelectScreens[i].anchoredPosition = new Vector2(levelSelectScreenPositions[i].x, levelSelectScreenPositions[i].y);
 
             //update icon display based puzzle completion status
-            for (int j = 0; j < puzzles[i].Count; j++)
+            for (int ii = 0; ii < puzzles[i].Count; ii++)
             {
-                levelSelectScreens[i].GetChild(j).GetComponent<LevelSelectButton>().UpdateDisplay(puzzles[i][j]);
+                levelSelectScreens[i].GetChild(ii).GetComponent<LevelSelectButton>().UpdateDisplay(puzzles[i][ii]);
             }
         }
     }
