@@ -15,6 +15,7 @@ public class Game : MonoBehaviour
     public Stack<CellType[,]> redoStack = new();
 
     public event Action<CellData> UpdateBoardAction;
+    public event Action RestartAction;
     public event Action GameOverAction;
 
     void Awake()
@@ -321,11 +322,16 @@ public class Game : MonoBehaviour
             }
         }
 
+        UpdateRowColumnData();
+        UpdateBoardAction.Invoke(currentPuzzleData.cellData);
+
         undoStack.Clear();
         redoStack.Clear();
 
-        UpdateRowColumnData();
-        UpdateBoardAction.Invoke(currentPuzzleData.cellData);
+        currentInputTool = InputTool.Fill;
+        clock.RestartClock();
+
+        RestartAction?.Invoke();
     }
 
     public void SavePuzzle(bool isPuzzleComplete)

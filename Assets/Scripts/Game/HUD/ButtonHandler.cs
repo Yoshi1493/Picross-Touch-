@@ -15,7 +15,9 @@ public class ButtonHandler : MonoBehaviour
     void Awake()
     {
         gameController.UpdateBoardAction += UpdateGameStateButtons;
+        gameController.RestartAction += OnGameRestart;
         gameController.GameOverAction += OnGameOver;
+
         FindObjectOfType<PauseHandler>().GamePauseAction += OnPausedStateChanged;
     }
 
@@ -37,6 +39,11 @@ public class ButtonHandler : MonoBehaviour
     void OnPausedStateChanged(bool state)
     {
         GetComponent<CanvasGroup>().blocksRaycasts = !state;
+    }
+
+    void OnGameRestart()
+    {
+        OnSelectInputTool(0);
     }
 
     void OnGameOver()

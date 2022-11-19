@@ -40,6 +40,12 @@ public class Clock : MonoBehaviour
         IsPaused = state;
     }
 
+    public void RestartClock()
+    {
+        StopClock();
+        StartClock(0f);
+    }
+
     void Awake()
     {
         FindObjectOfType<PauseHandler>().GamePauseAction += SetPaused;
