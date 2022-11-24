@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -7,17 +8,31 @@ using static GameSettings;
 public class DataValueHandler : MonoBehaviour
 {
     HorizontalOrVerticalLayoutGroup rowLayoutGroup, colLayoutGroup;
+    TextMeshProUGUI[] rowDataTexts, colDataTexts;
 
     [SerializeField] Transform rowDataHolder, colDataHolder;
     [SerializeField] GameObject rowDataValuePrefab, colDataValuePrefab;
 
+    CellData targetPuzzleCellData;
+
     const float CellSize = 16f / 9f * 100;
-    const string DoubleDigitColour = "FFFF00";
+
+    const string NormalColour = "FFFFFFFF";
+    const string DoubleDigitColour = "FFFF00FF";
+    const string NormalFade = "FFFFFF40";
+    const string DoubleDigitFade = "FFFF0040";
 
     void Awake()
     {
         FindObjectOfType<Game>().UpdateBoardAction += UpdateDataValues;
 
+        InitLayoutGroups();
+        GenerateDataValues();
+    }
+
+    //update row and column layout group spacing+padding based on puzzle dimensions
+    void InitLayoutGroups()
+    {
         rowLayoutGroup = rowDataHolder.GetComponent<VerticalLayoutGroup>();
         colLayoutGroup = colDataHolder.GetComponent<HorizontalLayoutGroup>();
 
@@ -26,41 +41,33 @@ public class DataValueHandler : MonoBehaviour
 
         rowLayoutGroup.padding.top = Mathf.RoundToInt(rowLayoutGroup.spacing / 2);
         colLayoutGroup.padding.left = Mathf.RoundToInt(colLayoutGroup.spacing / 2);
-
-        GenerateDataValues();
     }
 
     //instantiate data value text prefabs and set text to display respective row/column data
     void GenerateDataValues()
     {
+        targetPuzzleCellData = targetPuzzleData.cellData;
+
         //display respective row data values
         for (int i = targetPuzzleData.RowCount - 1; i >= 0; i--)
         {
-            GameObject newRowDataValue = Instantiate(rowDataValuePrefab, rowDataHolder) as GameObject;
+            GameObject newRowDataValue = Instantiate(rowDataValuePrefab, rowDataHolder);
             TextMeshProUGUI tmp = newRowDataValue.GetComponent<TextMeshProUGUI>();
 
             //update font size based on row count
             tmp.fontSize = DefaultFontSize - (FontSizeReductionRate * (InverseCellScale.y - 1));
 
             //if row is empty, print "0"
-            if (targetPuzzleData.cellData.RowData[i].Count == 0)
+            if (targetPuzzleCellData.RowData[i].Count == 0)
             {
                 tmp.text = "0";
             }
             //otherwise print all values
             else
             {
-                foreach (var item in targetPuzzleData.cellData.RowData[i])
+                foreach (var item in targetPuzzleCellData.RowData[i])
                 {
-                    //change colour of double digit numbers (to differentiate between "1 1" and "11")
-                    if (item >= 10)
-                    {
-                        tmp.text += $"<color=#{DoubleDigitColour}>{item}</color> ";
-                    }
-                    else
-                    {
-                        tmp.text += $"{item} ";
-                    }
+                    tmp.text += $"{ApplyColour(item)} ";
                 }
             }
         }
@@ -68,71 +75,169 @@ public class DataValueHandler : MonoBehaviour
         //repeat for column data values
         for (int i = targetPuzzleData.ColCount - 1; i >= 0; i--)
         {
-            GameObject newColDataValue = Instantiate(colDataValuePrefab, colDataHolder) as GameObject;
+            GameObject newColDataValue = Instantiate(colDataValuePrefab, colDataHolder);
             TextMeshProUGUI tmp = newColDataValue.GetComponent<TextMeshProUGUI>();
 
             tmp.fontSize = DefaultFontSize - (FontSizeReductionRate * (InverseCellScale.x - 1));
 
-            if (targetPuzzleData.cellData.ColData[i].Count == 0)
+            if (targetPuzzleCellData.ColData[i].Count == 0)
             {
                 tmp.text = "0";
             }
             else
             {
-                foreach (var item in targetPuzzleData.cellData.ColData[i])
+                foreach (var item in targetPuzzleCellData.ColData[i])
                 {
-                    if (item >= 10)
-                    {
-                        tmp.text += $"<color=#{DoubleDigitColour}>{item}</color>\n";
-                    }
-                    else
-                    {
-                        tmp.text += $"{item}\n";
-                    }
+                    tmp.text += $"{ApplyColour(item)}\n";
                 }
             }
         }
 
+        rowDataTexts = rowDataHolder.GetComponentsInChildren<TextMeshProUGUI>();
+        colDataTexts = colDataHolder.GetComponentsInChildren<TextMeshProUGUI>();
     }
 
     //check whether or not each row/column data matches respective row/column data in loaded puzzle
     //if it does, grey out the respective row/column data text
     void UpdateDataValues(CellData cellData)
     {
+        //for each row
         for (int r = 0; r < targetPuzzleData.RowCount; r++)
         {
-            TextMeshProUGUI rowDataText = rowDataHolder.GetChild(targetPuzzleData.RowCount - 1 - r).GetComponent<TextMeshProUGUI>();
-            Color rowDataColour = rowDataText.color;
+            TextMeshProUGUI rowDataText = rowDataTexts[targetPuzzleData.RowCount - 1 - r];
+            string[] textValues = rowDataText.text.Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
-            if (cellData.RowData[r].SequenceEqual(targetPuzzleData.cellData.RowData[r]))
+            List<int> currentRowData = cellData.RowData[r];
+            List<int> targetRowData = targetPuzzleCellData.RowData[r];
+            int minCheck = Mathf.Min(currentRowData.Count, targetRowData.Count);
+
+            List<int> matchedIndexes = new(targetRowData.Count);
+            int furthestMatchedIndex = 0;
+
+            //for each number in row's current cell data
+            for (int i = 0; i < minCheck; i++)
             {
-                rowDataColour.a = 0.25f;
-            }
-            else
-            {
-                rowDataColour.a = 1;
+                int ii = furthestMatchedIndex;
+
+                //check to see if it matches a number in target puzzle's respective row data
+                while (ii < targetRowData.Count)
+                {
+                    //if it does, immediately continue check on next value of current cell data
+                    if (currentRowData[i] == targetRowData[ii])
+                    {
+                        matchedIndexes.Add(ii);
+                        furthestMatchedIndex = ii + 1;
+                        break;
+                    }
+                    ii++;
+                }
             }
 
-            rowDataText.color = rowDataColour;
+            //for each number in row's target cell data
+            for (int i = 0; i < targetRowData.Count; i++)
+            {
+                if (matchedIndexes.Count > 0)
+                {
+                    int data = targetRowData[i];
+
+                    //check if current index matches an element in list of matched indexes
+                    //since list of matched indexes is already ordered,
+                    //just check if it equals the first element in list
+                    //if it does, remove from list and continue loop
+                    if (i == matchedIndexes[0])
+                    {
+                        textValues[i] = ApplyFade(data);
+                        matchedIndexes.RemoveAt(0);
+                        continue;
+                    }
+                    else
+                    {
+                        textValues[i] = ApplyColour(data);
+                    }
+                }
+                else
+                {
+                    while (i < targetRowData.Count)
+                    {
+                        textValues[i] = ApplyColour(targetRowData[i]);
+                        i++;
+                    }
+                }
+            }
+
+            rowDataText.text = string.Join(' ', textValues);
         }
 
+        //repeat for each column
         for (int c = 0; c < targetPuzzleData.ColCount; c++)
         {
-            TextMeshProUGUI colDataText = colDataHolder.GetChild(targetPuzzleData.ColCount - 1 - c).GetComponent<TextMeshProUGUI>();
-            Color colDataColour = colDataText.color;
+            TextMeshProUGUI colDataText = colDataTexts[targetPuzzleData.ColCount - 1 - c];
+            string[] textValues = colDataText.text.Split('\n', StringSplitOptions.RemoveEmptyEntries);
 
-            if (cellData.ColData[c].SequenceEqual(targetPuzzleData.cellData.ColData[c]))
+            List<int> currentColData = cellData.ColData[c];
+            List<int> targetColData = targetPuzzleCellData.ColData[c];
+            int minCheck = Mathf.Min(currentColData.Count, targetColData.Count);
+
+            List<int> matchedIndexes = new(targetColData.Count);
+            int furthestMatchedIndex = 0;
+
+            for (int i = 0; i < minCheck ; i++)
             {
-                colDataColour.a = 0.25f;
-            }
-            else
-            {
-                colDataColour.a = 1;
+                int ii = furthestMatchedIndex;
+
+                while (ii < targetColData.Count)
+                {
+                    if (currentColData[i] == targetColData[ii])
+                    {
+                        matchedIndexes.Add(ii);
+                        furthestMatchedIndex = ii + 1;
+                        break;
+                    }
+                    ii++;
+                }
             }
 
-            colDataText.color = colDataColour;
+            for (int i = 0; i < targetColData.Count; i++)
+            {
+                if (matchedIndexes.Count > 0)
+                {
+                    int data = targetColData[i];
+
+                    if (i == matchedIndexes[0])
+                    {
+                        textValues[i] = ApplyFade(data);
+                        matchedIndexes.RemoveAt(0);
+                        continue;
+                    }
+                    else
+                    {
+                        textValues[i] = ApplyColour(data);
+                    }
+                }
+                else
+                {
+                    while (i < targetColData.Count)
+                    {
+                        textValues[i] = ApplyColour(targetColData[i]);
+                        i++;
+                    }
+                }
+            }
+
+            colDataText.text = string.Join('\n', textValues);
         }
+
     }
 
+    //set colour of row/column data values. change colour if <num> is more than 1digit (to differentiate between "11" and "1 1")
+    string ApplyColour(int num)
+    {
+        return $"<color=#{(num >= 10 ? DoubleDigitColour : NormalColour)}>{num}</color>";
+    }
 
+    //same as ApplyColour, but based on whether value matches target puzzle data
+    string ApplyFade(int num)
+    {
+        return $"<color=#{(num >= 10 ? DoubleDigitFade : NormalFade)}>{num}</color>";
+    }
 }
