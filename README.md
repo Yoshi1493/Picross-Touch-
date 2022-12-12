@@ -9,7 +9,11 @@ This is a clone of the puzzle game Picross (a.k.a. [Nonograms](https://en.wikipe
 
 ## Screenshots
 
-\<to-do>
+<img src="https://user-images.githubusercontent.com/19334363/206980372-c1a95d2c-7609-4b67-8cdb-4d48a9a8f885.jpg" width=720>
+<img src="https://user-images.githubusercontent.com/19334363/206980394-751ec540-4563-4cea-a245-22caeb9b1622.jpg" width=720>
+<img src="https://user-images.githubusercontent.com/19334363/206980399-db2617f8-ddbc-4dac-a4db-1835e47952f9.jpg" width=720>
+<img src="https://user-images.githubusercontent.com/19334363/206980410-3932cd41-10b7-4b51-b609-480e59d29f6d.jpg" width=720>
+<img src="https://user-images.githubusercontent.com/19334363/206980413-dc517fcd-e067-4ddd-b1cd-dff45c8e7a62.jpg" width=720>
 
 ---
 
@@ -29,6 +33,5 @@ This is a clone of the puzzle game Picross (a.k.a. [Nonograms](https://en.wikipe
 * Level files are stored as plain .txt files ([ex.](https://github.com/Nic1493/Picross/blob/main/Assets/Scripts/Game/Level%20Files/20x20/%5B20x20%5D%20Yin-yang.txt)), where `0` represents an empty cell, and `1` represents a filled cell.
 
 ### Graphics 
-* background image, UI elements - buttons + icons - created in Photoshop
-* 
+* all graphical elements except for fonts - created in Photoshop
 * fonts - 100% free fonts found on dafont.com
